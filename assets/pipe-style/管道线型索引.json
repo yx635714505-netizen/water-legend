@@ -1,0 +1,831 @@
+{
+  "file": "水施线形参照.dwg",
+  "sha256": "0ddf9994d6aa622b6a1d4bd79cad8218ed5d8dffbf717a4ed4ff2665d2eed7ac",
+  "scope": "模型空间管道层上的直接对象。含管件。句柄用于回母版选择同用途对象。原生及嵌套内容、完整定义以 DWG 为准。",
+  "variables": {
+    "LTSCALE": 1000.0,
+    "CELTSCALE": 1.0,
+    "MSLTSCALE": 0.0,
+    "PSLTSCALE": 1.0,
+    "INSUNITS": 0.0
+  },
+  "layers": {
+    "PIPE-污水": {
+      "color": "2",
+      "linetype": "CONTINUOUS"
+    },
+    "PIPE-给水": {
+      "color": "3",
+      "linetype": "CONTINUOUS"
+    },
+    "VPIPE-雨水": {
+      "color": "4",
+      "linetype": "CONTINUOUS"
+    },
+    "S-PIPE-污水": {
+      "color": "2",
+      "linetype": "TG_W"
+    },
+    "S-PIPE-雨水": {
+      "color": "4",
+      "linetype": "TG_Y"
+    },
+    "S-PIPE-给水": {
+      "color": "3",
+      "linetype": "TG_J"
+    },
+    "VPIPE-给水": {
+      "color": "3",
+      "linetype": "CONTINUOUS"
+    },
+    "VPIPE-污水": {
+      "color": "2",
+      "linetype": "CONTINUOUS"
+    },
+    "S-PIPE-凝结": {
+      "color": "150",
+      "linetype": "CONTINUOUS"
+    },
+    "PIPE-雨水": {
+      "color": "4",
+      "linetype": "TG_Y"
+    },
+    "PIPE-废水": {
+      "color": "31",
+      "linetype": "TG_F"
+    }
+  },
+  "object_profiles": [
+    {
+      "layer": "PIPE-废水",
+      "linetype": "ByLayer",
+      "scale": "0.5",
+      "color": "ByLayer",
+      "lineweight": "ByLayer",
+      "handles": [
+        "85BBC",
+        "85BBA",
+        "85BB4",
+        "85BB2",
+        "85BB0",
+        "85BAE",
+        "85B92",
+        "85B0D",
+        "85B00",
+        "85AF6",
+        "85AF4",
+        "85AF0",
+        "85A9B",
+        "85A8A",
+        "85A88",
+        "85A84",
+        "85282",
+        "8527A",
+        "85271",
+        "84DFF",
+        "84DEC",
+        "84DDC"
+      ],
+      "native_types": {
+        "TCH_PIPE": 22
+      },
+      "pipe_samples": [
+        "85BBC",
+        "85BBA",
+        "85BB4",
+        "85BB2"
+      ]
+    },
+    {
+      "layer": "PIPE-废水",
+      "linetype": "ByLayer",
+      "scale": "1",
+      "color": "ByLayer",
+      "lineweight": "ByLayer",
+      "handles": [
+        "85C0E",
+        "85C0D",
+        "85BC1",
+        "85BBD",
+        "85BB7",
+        "85BB6",
+        "85BB5",
+        "85B94",
+        "85B93",
+        "85B82",
+        "85B80",
+        "85B7F",
+        "85B79",
+        "85AFB",
+        "85AF1",
+        "85AED",
+        "85A96",
+        "85A81",
+        "85283",
+        "8527B",
+        "85277",
+        "85276",
+        "85274",
+        "85272",
+        "8525A",
+        "85259",
+        "85255",
+        "85254",
+        "85253",
+        "85251",
+        "84E02",
+        "84E01",
+        "84E00",
+        "84DFB",
+        "84DFA",
+        "84DF9",
+        "84DF7",
+        "84DEF",
+        "84DEE",
+        "84DED",
+        "84DE4",
+        "84DE3",
+        "84DE2",
+        "84DE0",
+        "84DDF",
+        "84DDE",
+        "84DDD",
+        "84DD2"
+      ],
+      "native_types": {
+        "TCH_PIPE": 14,
+        "TCH_PIPEFITTING": 34
+      },
+      "pipe_samples": [
+        "85C0E",
+        "85C0D",
+        "85BB5",
+        "85AF1"
+      ]
+    },
+    {
+      "layer": "PIPE-污水",
+      "linetype": "ByLayer",
+      "scale": "1",
+      "color": "ByLayer",
+      "lineweight": "ByLayer",
+      "handles": [
+        "85C07",
+        "85C06",
+        "85C05",
+        "85C03",
+        "85C02",
+        "85C00",
+        "85BFE",
+        "85BFD",
+        "85BF6",
+        "85BF5",
+        "85BF3",
+        "85BEF",
+        "85BE9",
+        "85BE8",
+        "85BE5",
+        "85BE4",
+        "85BE3",
+        "85BE0",
+        "85BDE",
+        "85BDC",
+        "85BDB",
+        "85BDA",
+        "85BD8",
+        "85BD7",
+        "85BD6",
+        "85BD4",
+        "85BD3",
+        "85BD1",
+        "85BCF",
+        "85BCE",
+        "85BC9",
+        "85BC8",
+        "85BC6",
+        "85BC2",
+        "85BAD",
+        "85BAC",
+        "85BAB",
+        "85BAA",
+        "85B02",
+        "85A9D",
+        "8526B",
+        "8526A"
+      ],
+      "native_types": {
+        "TCH_PIPE": 22,
+        "TCH_PIPEFITTING": 20
+      },
+      "pipe_samples": [
+        "85C07",
+        "85C02",
+        "85C00",
+        "85BF6"
+      ]
+    },
+    {
+      "layer": "PIPE-污水",
+      "linetype": "__DASH",
+      "scale": "1",
+      "color": "ByLayer",
+      "lineweight": "ByLayer",
+      "handles": [
+        "85267"
+      ],
+      "native_types": {
+        "TCH_PIPE": 1
+      },
+      "pipe_samples": [
+        "85267"
+      ]
+    },
+    {
+      "layer": "PIPE-给水",
+      "linetype": "ByBlock",
+      "scale": "1",
+      "color": "0",
+      "lineweight": "ByLayer",
+      "handles": [
+        "85B9F",
+        "85AD4",
+        "85AD3",
+        "85ACD",
+        "85A80",
+        "85A7F",
+        "85A75",
+        "85A4D"
+      ],
+      "native_types": {
+        "TCH_PIPE": 8
+      },
+      "pipe_samples": [
+        "85B9F",
+        "85AD4",
+        "85AD3",
+        "85ACD"
+      ]
+    },
+    {
+      "layer": "PIPE-给水",
+      "linetype": "ByLayer",
+      "scale": "1",
+      "color": "0",
+      "lineweight": "ByLayer",
+      "handles": [
+        "85B7C",
+        "85B75",
+        "85A77",
+        "85A76"
+      ],
+      "native_types": {
+        "TCH_PIPEFITTING": 4
+      },
+      "pipe_samples": []
+    },
+    {
+      "layer": "PIPE-给水",
+      "linetype": "ByLayer",
+      "scale": "1",
+      "color": "ByLayer",
+      "lineweight": "ByLayer",
+      "handles": [
+        "8533D",
+        "8413E",
+        "84139",
+        "84134",
+        "84133",
+        "84130",
+        "8412D",
+        "84128",
+        "84123",
+        "84121",
+        "84120",
+        "8411D",
+        "84119",
+        "84113",
+        "84112",
+        "84111",
+        "8410E",
+        "8410B",
+        "8410A",
+        "84107"
+      ],
+      "native_types": {
+        "TCH_PIPEFITTING": 16,
+        "TCH_PIPE": 4
+      },
+      "pipe_samples": [
+        "84130",
+        "84120",
+        "8410B",
+        "84107"
+      ]
+    },
+    {
+      "layer": "PIPE-给水",
+      "linetype": "TG_J",
+      "scale": "0.5",
+      "color": "ByLayer",
+      "lineweight": "ByLayer",
+      "handles": [
+        "8413D",
+        "8412C",
+        "84117",
+        "84110",
+        "84101"
+      ],
+      "native_types": {
+        "TCH_PIPE": 5
+      },
+      "pipe_samples": [
+        "8413D",
+        "8412C",
+        "84117",
+        "84110"
+      ]
+    },
+    {
+      "layer": "S-PIPE-凝结",
+      "linetype": "ByLayer",
+      "scale": "1",
+      "color": "ByLayer",
+      "lineweight": "ByLayer",
+      "handles": [
+        "85D76",
+        "85D75",
+        "85D74",
+        "85D73",
+        "85D71",
+        "85D6F",
+        "85D6C",
+        "85D6B",
+        "85D68",
+        "85D67",
+        "85D66",
+        "85D64",
+        "85D63",
+        "85D62",
+        "85D60",
+        "85D5F",
+        "85D5E",
+        "85D5D",
+        "85D5C",
+        "85D5A",
+        "85D59",
+        "85D56",
+        "85D54",
+        "85D52",
+        "85D50",
+        "85D4D",
+        "85D4C",
+        "85D49",
+        "85D48",
+        "85D47",
+        "85D45",
+        "85D44",
+        "85D43",
+        "85D41",
+        "85D40",
+        "85D3F",
+        "85D3E",
+        "85D3D",
+        "85D3B",
+        "85D3A",
+        "85D37",
+        "85D35",
+        "85D33",
+        "85449",
+        "85448",
+        "85445",
+        "85444",
+        "8541C",
+        "8541B",
+        "8540E",
+        "8540D",
+        "8540A",
+        "85409",
+        "85406",
+        "85405",
+        "85402",
+        "85401"
+      ],
+      "native_types": {
+        "TCH_PIPE": 27,
+        "TCH_PIPEFITTING": 30
+      },
+      "pipe_samples": [
+        "85D76",
+        "85D74",
+        "85D71",
+        "85D6F"
+      ]
+    },
+    {
+      "layer": "S-PIPE-凝结",
+      "linetype": "TG_Y",
+      "scale": "1",
+      "color": "ByLayer",
+      "lineweight": "ByLayer",
+      "handles": [
+        "85443",
+        "8540C",
+        "85408",
+        "85404",
+        "85400"
+      ],
+      "native_types": {
+        "TCH_PIPE": 5
+      },
+      "pipe_samples": [
+        "85443",
+        "8540C",
+        "85408",
+        "85404"
+      ]
+    },
+    {
+      "layer": "S-PIPE-污水",
+      "linetype": "ByLayer",
+      "scale": "0.5",
+      "color": "ByLayer",
+      "lineweight": "ByLayer",
+      "handles": [
+        "85C09",
+        "85BF8",
+        "85BF2",
+        "85BE2",
+        "85BCB",
+        "85BC5",
+        "85280",
+        "8526D",
+        "85264",
+        "85261",
+        "84E03",
+        "84DF1"
+      ],
+      "native_types": {
+        "TCH_PIPE": 12
+      },
+      "pipe_samples": [
+        "85C09",
+        "85BF8",
+        "85BF2",
+        "85BE2"
+      ]
+    },
+    {
+      "layer": "S-PIPE-污水",
+      "linetype": "ByLayer",
+      "scale": "1",
+      "color": "ByLayer",
+      "lineweight": "ByLayer",
+      "handles": [
+        "85C0A",
+        "85C04",
+        "85BD9",
+        "8526E",
+        "85265",
+        "8525D",
+        "85257",
+        "84E04",
+        "84DFD",
+        "84DF2",
+        "84DE6"
+      ],
+      "native_types": {
+        "TCH_PIPEFITTING": 11
+      },
+      "pipe_samples": []
+    },
+    {
+      "layer": "S-PIPE-给水",
+      "linetype": "ByLayer",
+      "scale": "0.5",
+      "color": "ByLayer",
+      "lineweight": "ByLayer",
+      "handles": [
+        "85BA8",
+        "85BA4",
+        "85BA0",
+        "85B99",
+        "85B97",
+        "85AE4",
+        "85AE0",
+        "85ADB",
+        "85AD7",
+        "85ACF",
+        "85AC8",
+        "85ABA",
+        "85AB6",
+        "85AB4",
+        "85AB0",
+        "85A94",
+        "85A7B",
+        "85A7A",
+        "85A4A",
+        "85A47"
+      ],
+      "native_types": {
+        "TCH_PIPE": 20
+      },
+      "pipe_samples": [
+        "85BA8",
+        "85BA4",
+        "85BA0",
+        "85B99"
+      ]
+    },
+    {
+      "layer": "S-PIPE-给水",
+      "linetype": "ByLayer",
+      "scale": "1",
+      "color": "ByLayer",
+      "lineweight": "ByLayer",
+      "handles": [
+        "85BA9",
+        "85B9E",
+        "85B9C",
+        "85B96",
+        "85B7E",
+        "85B7D",
+        "85B77",
+        "85B76",
+        "85AE5",
+        "85AE1",
+        "85AD5",
+        "85AC7",
+        "85AC6",
+        "85ABB",
+        "85A93",
+        "85A91",
+        "85A8C"
+      ],
+      "native_types": {
+        "TCH_PIPEFITTING": 17
+      },
+      "pipe_samples": []
+    },
+    {
+      "layer": "S-PIPE-雨水",
+      "linetype": "ByLayer",
+      "scale": "0.5",
+      "color": "ByLayer",
+      "lineweight": "ByLayer",
+      "handles": [
+        "85CF2",
+        "85CEE",
+        "85CED",
+        "85CEB",
+        "85CE3",
+        "85CE2",
+        "85CD8",
+        "85CD1",
+        "85CD0",
+        "85CCD",
+        "85CC9",
+        "85CC8",
+        "85CC0",
+        "85CB8",
+        "85CB7",
+        "85CB0",
+        "85CA6",
+        "85CA5",
+        "85CA3",
+        "85C9B",
+        "85C9A",
+        "85C98",
+        "85C97",
+        "85C93",
+        "85C92",
+        "85C81",
+        "85C80",
+        "85C7E",
+        "85C76",
+        "85C75",
+        "85C73",
+        "85C54",
+        "85C53",
+        "85366",
+        "85361",
+        "8535E",
+        "85359",
+        "85350",
+        "85347",
+        "85344"
+      ],
+      "native_types": {
+        "TCH_PIPE": 40
+      },
+      "pipe_samples": [
+        "85CF2",
+        "85CEE",
+        "85CED",
+        "85CEB"
+      ]
+    },
+    {
+      "layer": "S-PIPE-雨水",
+      "linetype": "ByLayer",
+      "scale": "1",
+      "color": "ByLayer",
+      "lineweight": "ByLayer",
+      "handles": [
+        "85CF1",
+        "85CEF",
+        "85CE8",
+        "85CE0",
+        "85CCC",
+        "85CCA",
+        "85CBD",
+        "85CB2",
+        "85CA9",
+        "85CA7",
+        "85C96",
+        "85C94",
+        "85C84",
+        "85C82",
+        "85C7B",
+        "85C5A",
+        "85367",
+        "85362",
+        "8535F",
+        "8535A",
+        "85355",
+        "85354",
+        "85353",
+        "85340",
+        "8533B",
+        "85339",
+        "85336",
+        "8531F",
+        "85315",
+        "8530F"
+      ],
+      "native_types": {
+        "TCH_PIPEFITTING": 30
+      },
+      "pipe_samples": []
+    },
+    {
+      "layer": "VPIPE-污水",
+      "linetype": "ByLayer",
+      "scale": "1",
+      "color": "ByLayer",
+      "lineweight": "ByLayer",
+      "handles": [
+        "8531C",
+        "8531B",
+        "8525E",
+        "8525B",
+        "85258",
+        "8524F",
+        "84E08",
+        "84E07",
+        "84E05",
+        "84DFE",
+        "84DF5",
+        "84DF3",
+        "84DE7",
+        "84144"
+      ],
+      "native_types": {
+        "TCH_PIPEFITTING": 8,
+        "TCH_PIPE": 6
+      },
+      "pipe_samples": [
+        "8525B",
+        "8524F",
+        "84E05",
+        "84DF5"
+      ]
+    },
+    {
+      "layer": "VPIPE-给水",
+      "linetype": "ByLayer",
+      "scale": "1",
+      "color": "ByLayer",
+      "lineweight": "ByLayer",
+      "handles": [
+        "8413C",
+        "8413B",
+        "8413A",
+        "84138",
+        "84136",
+        "8412B",
+        "8412A",
+        "84129",
+        "84127",
+        "84125",
+        "84122",
+        "8411F",
+        "8411C",
+        "8411B",
+        "84118"
+      ],
+      "native_types": {
+        "TCH_PIPEFITTING": 9,
+        "TCH_PIPE": 6
+      },
+      "pipe_samples": [
+        "84138",
+        "84136",
+        "84127",
+        "84125"
+      ]
+    },
+    {
+      "layer": "VPIPE-雨水",
+      "linetype": "ByLayer",
+      "scale": "1",
+      "color": "ByLayer",
+      "lineweight": "ByLayer",
+      "handles": [
+        "85C8D",
+        "85C89",
+        "85341",
+        "8533C",
+        "8533A",
+        "85337",
+        "85335",
+        "85333",
+        "85331",
+        "8532F",
+        "85326",
+        "85322",
+        "85321",
+        "85320",
+        "8531E",
+        "8531D",
+        "85319",
+        "85317",
+        "85316",
+        "85313",
+        "85312",
+        "85311",
+        "85310",
+        "8530E",
+        "8530D",
+        "8530B",
+        "85309",
+        "85307",
+        "85305",
+        "85303",
+        "85302",
+        "85300",
+        "852FE",
+        "852FD",
+        "852FB",
+        "852F9",
+        "852F8",
+        "852F6",
+        "852F5",
+        "852F4",
+        "852F3",
+        "852F2",
+        "852F1",
+        "852ED",
+        "852EA",
+        "852E9",
+        "852E6",
+        "852E4",
+        "852E2",
+        "852E0",
+        "852D0",
+        "852CF",
+        "852CD",
+        "852CB",
+        "852CA",
+        "852C8",
+        "852C6",
+        "852C5",
+        "852C3",
+        "852C1",
+        "852C0",
+        "852BE",
+        "852BC",
+        "852BB",
+        "852B9",
+        "852B7",
+        "852B6",
+        "852B4",
+        "852B2",
+        "852B1",
+        "852AF",
+        "8528A",
+        "85289",
+        "85287"
+      ],
+      "native_types": {
+        "TCH_PIPE": 31,
+        "TCH_PIPEFITTING": 43
+      },
+      "pipe_samples": [
+        "85C8D",
+        "85C89",
+        "85337",
+        "85333"
+      ]
+    }
+  ]
+}

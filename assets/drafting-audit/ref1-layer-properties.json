@@ -1,0 +1,362 @@
+[
+  {
+    "name": "DIM_SYMB",
+    "color": 8,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "VPIPE-雨水",
+    "color": 4,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "DIM_雨水",
+    "color": 3,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "TEXT_雨水",
+    "color": 7,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "DIM_ELEV",
+    "color": 8,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "S-DIM_SYMB",
+    "color": 3,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "S-给排水文字说明",
+    "color": 50,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "EQUIP_雨水斗",
+    "color": 7,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "TWT_TEXT",
+    "color": 7,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "DIM_污水",
+    "color": 3,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "VPIPE-污水",
+    "color": 2,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "TEXT_污水",
+    "color": 7,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "VPIPE-给水",
+    "color": 3,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "TEXT_给水",
+    "color": 7,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "DIM_给水",
+    "color": 3,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "PIPE-给水",
+    "color": 3,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "EQUIP_给水",
+    "color": 7,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "VALVE_给水",
+    "color": 7,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "PIPE-污水",
+    "color": 2,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "EQUIP_污水",
+    "color": 7,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "A-DIM_LEAD",
+    "color": 8,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "TWT_室外",
+    "color": 2,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "DIM_LEAD",
+    "color": 8,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "PIPE-雨水",
+    "color": 4,
+    "linetype": "TG_Y",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "DIM_废水",
+    "color": 3,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "TWT_LEAD",
+    "color": 3,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "EQUIP_雨水",
+    "color": 7,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "TWT_ELEV",
+    "color": 3,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "PIPE-废水",
+    "color": 31,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "TEXT_废水",
+    "color": 7,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "A-DIM_ELEV",
+    "color": 8,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "S-DIM_废水",
+    "color": 31,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "S-EQUIP_污水",
+    "color": 2,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "S-TEXT_废水",
+    "color": 31,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "S-PIPE-废水",
+    "color": 31,
+    "linetype": "TG_F",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  },
+  {
+    "name": "S-VPIPE-废水",
+    "color": 31,
+    "linetype": "Continuous",
+    "lineweight": -3,
+    "plot": true,
+    "on": true,
+    "freeze": false,
+    "lock": false
+  }
+]

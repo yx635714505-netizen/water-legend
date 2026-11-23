@@ -1,0 +1,592 @@
+{
+  "version": "1.0",
+  "canonical_source": "ref2",
+  "source_dwg": "sources/03-蛇形山扶洲周府-水施_t8.dwg",
+  "status": "图例表视觉核对；符号句柄来自原始来源，非标准母版的新句柄",
+  "entries": [
+    {
+      "id": "P01",
+      "name": "给水管",
+      "panel": "pipes",
+      "line_mark": "J",
+      "riser_prefix": "JL",
+      "unit": "米",
+      "source_name_handle": "2E2",
+      "symbol_handles": [
+        "2E1",
+        "2E3",
+        "303",
+        "304"
+      ],
+      "source_row_text": [
+        "JL-1"
+      ]
+    },
+    {
+      "id": "P02",
+      "name": "污水管",
+      "panel": "pipes",
+      "line_mark": "W",
+      "riser_prefix": "WL",
+      "unit": "米",
+      "source_name_handle": "28A",
+      "symbol_handles": [
+        "288",
+        "289",
+        "307",
+        "308"
+      ],
+      "source_row_text": []
+    },
+    {
+      "id": "P03",
+      "name": "废水管",
+      "panel": "pipes",
+      "line_mark": "F",
+      "riser_prefix": "FL",
+      "unit": "米",
+      "source_name_handle": "2B1",
+      "symbol_handles": [
+        "2AF",
+        "2B0",
+        "2F9",
+        "2FA"
+      ],
+      "source_row_text": []
+    },
+    {
+      "id": "P04",
+      "name": "冷凝管",
+      "panel": "pipes",
+      "line_mark": "LN",
+      "riser_prefix": "NL",
+      "unit": "米",
+      "source_name_handle": "2A0",
+      "symbol_handles": [
+        "29E",
+        "29F",
+        "309",
+        "30A"
+      ],
+      "source_row_text": [
+        "按需",
+        "米"
+      ]
+    },
+    {
+      "id": "P05",
+      "name": "阳台雨水管",
+      "panel": "pipes",
+      "line_mark": "YT",
+      "riser_prefix": "YTL",
+      "unit": "米",
+      "source_name_handle": "2AA",
+      "symbol_handles": [
+        "2A8",
+        "2A9",
+        "30B",
+        "30C"
+      ],
+      "source_row_text": [
+        "按需"
+      ]
+    },
+    {
+      "id": "P06",
+      "name": "屋面雨水管",
+      "panel": "pipes",
+      "line_mark": "Y",
+      "riser_prefix": "YL",
+      "unit": "米",
+      "source_name_handle": "2B8",
+      "symbol_handles": [
+        "2B6",
+        "2B7",
+        "2FB",
+        "2FC"
+      ],
+      "source_row_text": [
+        "按需"
+      ]
+    },
+    {
+      "id": "P07",
+      "name": "压力污水管",
+      "panel": "pipes",
+      "line_mark": "YW",
+      "riser_prefix": "YWL",
+      "unit": "米",
+      "source_name_handle": "2EA",
+      "symbol_handles": [
+        "2E8",
+        "2E9",
+        "2FD",
+        "2FE"
+      ],
+      "source_row_text": [
+        "按需"
+      ]
+    },
+    {
+      "id": "P08",
+      "name": "压力废水管",
+      "panel": "pipes",
+      "line_mark": "YF",
+      "riser_prefix": "YFL",
+      "unit": "米",
+      "source_name_handle": "2C0",
+      "symbol_handles": [
+        "2BE",
+        "2BF",
+        "305",
+        "306"
+      ],
+      "source_row_text": [
+        "按需"
+      ]
+    },
+    {
+      "id": "P09",
+      "name": "通气管",
+      "panel": "pipes",
+      "line_mark": "T",
+      "riser_prefix": "TL",
+      "unit": "米",
+      "source_name_handle": "2C8",
+      "symbol_handles": [
+        "2C6",
+        "2C7",
+        "2FF",
+        "300"
+      ],
+      "source_row_text": [
+        "按需"
+      ]
+    },
+    {
+      "id": "P10",
+      "name": "中水供水管",
+      "panel": "pipes",
+      "line_mark": "Z",
+      "riser_prefix": "ZL",
+      "unit": "米",
+      "source_name_handle": "2D4",
+      "symbol_handles": [
+        "2D9",
+        "2DA",
+        "301",
+        "302"
+      ],
+      "source_row_text": [
+        "按需"
+      ]
+    },
+    {
+      "id": "D01",
+      "name": "闸阀",
+      "variant": null,
+      "panel": "devices",
+      "source_name_handle": "5E3",
+      "symbol_handles": [
+        "315"
+      ],
+      "source_row_text": [
+        "个",
+        "按需",
+        "闸阀",
+        "Z41H型，DN50~350"
+      ]
+    },
+    {
+      "id": "D02",
+      "name": "止回阀",
+      "variant": null,
+      "panel": "devices",
+      "source_name_handle": "5F7",
+      "symbol_handles": [
+        "31D"
+      ],
+      "source_row_text": [
+        "个",
+        "按需",
+        "01SS105-P25",
+        "止回阀",
+        "PN≥1.6MPa"
+      ]
+    },
+    {
+      "id": "D03",
+      "name": "截止阀",
+      "variant": null,
+      "panel": "devices",
+      "source_name_handle": "5F6",
+      "symbol_handles": [
+        "30E"
+      ],
+      "source_row_text": [
+        "个",
+        "按需",
+        "截止阀",
+        "J41H型，DN15~40"
+      ]
+    },
+    {
+      "id": "D04",
+      "name": "排气阀",
+      "variant": null,
+      "panel": "devices",
+      "source_name_handle": "5F5",
+      "symbol_handles": [
+        "339",
+        "34A",
+        "34B"
+      ],
+      "source_row_text": [
+        "个",
+        "按需",
+        "01SS105-P33",
+        "排气阀",
+        "DN25"
+      ]
+    },
+    {
+      "id": "D05",
+      "name": "水表",
+      "variant": null,
+      "panel": "devices",
+      "source_name_handle": "5F3",
+      "symbol_handles": [
+        "3A9",
+        "3AA",
+        "3AB",
+        "3AC",
+        "3AD",
+        "3AE"
+      ],
+      "source_row_text": [
+        "套",
+        "01SS105-P12",
+        "按需",
+        "水表"
+      ]
+    },
+    {
+      "id": "D06",
+      "name": "减压阀组",
+      "variant": null,
+      "panel": "devices",
+      "source_name_handle": "5F2",
+      "symbol_handles": [
+        "3CE",
+        "3CF",
+        "3D0",
+        "3D1",
+        "3D2",
+        "3D3",
+        "3D4",
+        "3D5"
+      ],
+      "source_row_text": [
+        "套",
+        "01SS105-P72",
+        "按需",
+        "减压阀组",
+        "DN150"
+      ]
+    },
+    {
+      "id": "D07",
+      "name": "倒流防止器",
+      "variant": null,
+      "panel": "devices",
+      "source_name_handle": "5F4",
+      "symbol_handles": [
+        "32A"
+      ],
+      "source_row_text": [
+        "套",
+        "12S108-1",
+        "按需",
+        "倒流防止器"
+      ]
+    },
+    {
+      "id": "D08",
+      "name": "角阀",
+      "variant": null,
+      "panel": "devices",
+      "source_name_handle": "5F1",
+      "symbol_handles": [
+        "3D8"
+      ],
+      "source_row_text": [
+        "按需",
+        "个",
+        "S4（一）-2004",
+        "角阀"
+      ]
+    },
+    {
+      "id": "D09",
+      "name": "水龙头",
+      "variant": null,
+      "panel": "devices",
+      "source_name_handle": "5F0",
+      "symbol_handles": [
+        "3E4"
+      ],
+      "source_row_text": [
+        "按需",
+        "个",
+        "S4（一）-2004",
+        "水龙头",
+        "铜质或合金"
+      ]
+    },
+    {
+      "id": "D10",
+      "name": "淋浴器",
+      "variant": "阀门附件表表达",
+      "panel": "devices",
+      "source_name_handle": "5EF",
+      "symbol_handles": [
+        "3EF"
+      ],
+      "source_row_text": [
+        "按需",
+        "个",
+        "S4（一）-2004",
+        "淋浴器",
+        "铜质或合金"
+      ]
+    },
+    {
+      "id": "D11",
+      "name": "P型存水弯",
+      "variant": null,
+      "panel": "devices",
+      "source_name_handle": "5E9",
+      "symbol_handles": [
+        "564"
+      ],
+      "source_row_text": [
+        "按需",
+        "个",
+        "04S301",
+        "P型存水弯",
+        "UPC材质"
+      ]
+    },
+    {
+      "id": "D12",
+      "name": "S型存水弯",
+      "variant": null,
+      "panel": "devices",
+      "source_name_handle": "5E8",
+      "symbol_handles": [
+        "569"
+      ],
+      "source_row_text": [
+        "按需",
+        "个",
+        "04S301",
+        "S型存水弯",
+        "UPC材质"
+      ]
+    },
+    {
+      "id": "D13",
+      "name": "地漏",
+      "variant": null,
+      "panel": "devices",
+      "source_name_handle": "5E7",
+      "symbol_handles": [
+        "56E",
+        "585"
+      ],
+      "source_row_text": [
+        "按需",
+        "个",
+        "04S301",
+        "地漏",
+        "水封≥50mm"
+      ]
+    },
+    {
+      "id": "D14",
+      "name": "87型雨水斗",
+      "variant": null,
+      "panel": "devices",
+      "source_name_handle": "5E6",
+      "symbol_handles": [
+        "578",
+        "57E"
+      ],
+      "source_row_text": [
+        "按需",
+        "个",
+        "01S302",
+        "87型雨水斗",
+        "UPC材质"
+      ]
+    },
+    {
+      "id": "D15",
+      "name": "金属波纹管",
+      "variant": null,
+      "panel": "devices",
+      "source_name_handle": "5E5",
+      "symbol_handles": [
+        "5A8"
+      ],
+      "source_row_text": [
+        "按需",
+        "个",
+        "金属波纹管"
+      ]
+    },
+    {
+      "id": "D16",
+      "name": "蹲式大便器（自带水封）",
+      "variant": null,
+      "panel": "devices",
+      "source_name_handle": "5EE",
+      "symbol_handles": [
+        "493"
+      ],
+      "source_row_text": [
+        "套",
+        "按需",
+        "09S304",
+        "蹲式大便器（自带水封）",
+        "瓷制成品,配五金"
+      ]
+    },
+    {
+      "id": "D17",
+      "name": "坐式大便器",
+      "variant": null,
+      "panel": "devices",
+      "source_name_handle": "5ED",
+      "symbol_handles": [
+        "4AA",
+        "5C9"
+      ],
+      "source_row_text": [
+        "套",
+        "按需",
+        "09S304",
+        "坐式大便器",
+        "瓷制成品,配五金"
+      ]
+    },
+    {
+      "id": "D18",
+      "name": "污水池",
+      "variant": null,
+      "panel": "devices",
+      "source_name_handle": "5EC",
+      "symbol_handles": [
+        "4EB"
+      ],
+      "source_row_text": [
+        "套",
+        "按需",
+        "09S304",
+        "污水池",
+        "瓷制成品,配五金"
+      ]
+    },
+    {
+      "id": "D19",
+      "name": "洗脸盆",
+      "variant": null,
+      "panel": "devices",
+      "source_name_handle": "5EB",
+      "symbol_handles": [
+        "4FD",
+        "53E"
+      ],
+      "source_row_text": [
+        "套",
+        "按需",
+        "09S304",
+        "洗脸盆",
+        "瓷制成品,配五金"
+      ]
+    },
+    {
+      "id": "D20",
+      "name": "洗涤盆",
+      "variant": null,
+      "panel": "devices",
+      "source_name_handle": "5EA",
+      "symbol_handles": [
+        "50F"
+      ],
+      "source_row_text": [
+        "套",
+        "按需",
+        "09S304",
+        "洗涤盆",
+        "不锈钢成品,配五金"
+      ]
+    },
+    {
+      "id": "D21",
+      "name": "淋浴器",
+      "variant": "器具平面表达",
+      "panel": "devices",
+      "source_name_handle": "5E4",
+      "symbol_handles": [
+        "5BC"
+      ],
+      "source_row_text": [
+        "套",
+        "按需",
+        "淋浴器",
+        "09S304",
+        "不锈钢成品,配五金"
+      ]
+    },
+    {
+      "id": "D22",
+      "name": "成品污水检查井",
+      "variant": null,
+      "panel": "devices",
+      "source_name_handle": "5F9",
+      "symbol_handles": [
+        "490",
+        "491",
+        "492",
+        "5DF",
+        "5E0",
+        "5E1"
+      ],
+      "source_row_text": [
+        "个",
+        "按需",
+        "W",
+        "成品污水检查井",
+        "加强复合材料"
+      ]
+    },
+    {
+      "id": "D23",
+      "name": "化粪池",
+      "variant": null,
+      "panel": "devices",
+      "source_name_handle": "5F8",
+      "symbol_handles": [
+        "5A7"
+      ],
+      "source_row_text": [
+        "座",
+        "14SS706",
+        "按需",
+        "化粪池",
+        "钢筋混凝土化粪池"
+      ]
+    }
+  ]
+}

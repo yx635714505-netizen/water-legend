@@ -1,0 +1,48 @@
+[
+  {
+    "name": "管道图例母版",
+    "entities": 133,
+    "types": {
+      "AcDbText": 62,
+      "TDbText": 1,
+      "AcDbPolyline": 2,
+      "TDbPipe": 10,
+      "TDbPipeText": 10,
+      "AcDbLine": 28,
+      "TDbPipeFitting": 20
+    }
+  },
+  {
+    "name": "阀门器具图例母版",
+    "entities": 205,
+    "types": {
+      "TDbText": 53,
+      "AcDbPoint": 2,
+      "AcDbLine": 57,
+      "AcDbCircle": 1,
+      "TDbEquipment": 9,
+      "NativeObjectWithoutCOMName": 2,
+      "AcDbText": 65,
+      "AcDbPolyline": 3,
+      "AcDbBlockReference": 13
+    }
+  },
+  {
+    "name": "水施标准图例_V1",
+    "entities": 338,
+    "types": {
+      "NativeObjectWithoutCOMName": 2,
+      "AcDbText": 127,
+      "TDbPipe": 10,
+      "AcDbPolyline": 5,
+      "TDbPipeText": 10,
+      "TDbPipeFitting": 20,
+      "AcDbBlockReference": 13,
+      "AcDbPoint": 2,
+      "AcDbLine": 85,
+      "TDbText": 54,
+      "TDbEquipment": 9,
+      "AcDbCircle": 1
+    }
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-17",
+  "source_manifest": "../sources.json",
+  "notes": [
+    "ref3含多组旧图/参照图，只按图签与平面系统成套对应选择，不以全文件对象数量统计项目设备。",
+    "ref4主平面含ASD1..ASD4块，pipe-entities包含这些块定义中的对象，句柄按来源DWG使用。",
+    "彩色审查预览关闭打印样式以观察CAD配色，不作为最终项目CTB打印线宽基准。",
+    "tables为AutoLISP tblnext原始输出；复杂线型完整资源以来源DWG为准，不能仅靠49组代码重建。"
+  ]
+}

@@ -1,0 +1,1002 @@
+[
+  {
+    "handle": "214407",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-污水",
+    "entity_linetype": "__DASH",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "21440A",
+    "type": "TCH_PIPEFITTING",
+    "layer": "PIPE-污水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "21440B",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-污水",
+    "entity_linetype": "__DASH",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "21440C",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-污水",
+    "entity_linetype": "__DASH",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "21440D",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-污水",
+    "entity_linetype": "__DASH",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "21440E",
+    "type": "TCH_PIPEFITTING",
+    "layer": "PIPE-污水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "21440F",
+    "type": "TCH_PIPEFITTING",
+    "layer": "PIPE-污水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214410",
+    "type": "TCH_PIPEFITTING",
+    "layer": "PIPE-污水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214411",
+    "type": "TCH_PIPEFITTING",
+    "layer": "PIPE-污水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214412",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-给水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214418",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-给水",
+    "entity_linetype": "ByBlock",
+    "entity_color": 0.0,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "21441A",
+    "type": "TCH_PIPEFITTING",
+    "layer": "PIPE-给水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "21441B",
+    "type": "TCH_PIPEFITTING",
+    "layer": "PIPE-给水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "21441C",
+    "type": "TCH_PIPEFITTING",
+    "layer": "PIPE-给水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 0.0,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "21441D",
+    "type": "TCH_PIPEFITTING",
+    "layer": "PIPE-给水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 0.0,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "21441E",
+    "type": "TCH_PIPEFITTING",
+    "layer": "PIPE-给水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 0.0,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214420",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-给水",
+    "entity_linetype": "ByBlock",
+    "entity_color": 0.0,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214423",
+    "type": "TCH_PIPEFITTING",
+    "layer": "PIPE-给水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 0.0,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "21442A",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-给水",
+    "entity_linetype": "ByBlock",
+    "entity_color": 0.0,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "21442D",
+    "type": "TCH_PIPEFITTING",
+    "layer": "PIPE-给水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 0.0,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214433",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-给水",
+    "entity_linetype": "ByBlock",
+    "entity_color": 0.0,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214436",
+    "type": "TCH_PIPEFITTING",
+    "layer": "PIPE-给水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 0.0,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214438",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-给水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214440",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-给水",
+    "entity_linetype": "ByBlock",
+    "entity_color": 0.0,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214444",
+    "type": "TCH_PIPEFITTING",
+    "layer": "PIPE-给水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 0.0,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214445",
+    "type": "TCH_PIPEFITTING",
+    "layer": "PIPE-给水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "21444A",
+    "type": "TCH_PIPE",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "21444B",
+    "type": "TCH_PIPE",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "21444C",
+    "type": "TCH_PIPE",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "21444D",
+    "type": "TCH_PIPE",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "21444E",
+    "type": "TCH_PIPEFITTING",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "21444F",
+    "type": "TCH_PIPEFITTING",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214450",
+    "type": "TCH_PIPEFITTING",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214451",
+    "type": "TCH_PIPEFITTING",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214452",
+    "type": "TCH_PIPEFITTING",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214453",
+    "type": "TCH_PIPEFITTING",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214454",
+    "type": "TCH_PIPEFITTING",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214455",
+    "type": "TCH_PIPEFITTING",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2144BD",
+    "type": "TCH_PIPE",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2144BE",
+    "type": "TCH_PIPE",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2144BF",
+    "type": "TCH_PIPE",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2144C0",
+    "type": "TCH_PIPE",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2144C1",
+    "type": "TCH_PIPEFITTING",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2144C2",
+    "type": "TCH_PIPEFITTING",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2144C3",
+    "type": "TCH_PIPEFITTING",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2144C4",
+    "type": "TCH_PIPEFITTING",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2144C5",
+    "type": "TCH_PIPEFITTING",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2144C6",
+    "type": "TCH_PIPEFITTING",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2144C7",
+    "type": "TCH_PIPEFITTING",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2144C8",
+    "type": "TCH_PIPEFITTING",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2144FF",
+    "type": "TCH_PIPE",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214500",
+    "type": "TCH_PIPE",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214501",
+    "type": "TCH_PIPE",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214502",
+    "type": "TCH_PIPE",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214503",
+    "type": "TCH_PIPEFITTING",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214504",
+    "type": "TCH_PIPEFITTING",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214505",
+    "type": "TCH_PIPEFITTING",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214506",
+    "type": "TCH_PIPEFITTING",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214507",
+    "type": "TCH_PIPEFITTING",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214508",
+    "type": "TCH_PIPEFITTING",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214509",
+    "type": "TCH_PIPEFITTING",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "21450A",
+    "type": "TCH_PIPEFITTING",
+    "layer": "VPIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "21453F",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-污水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214546",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-污水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214548",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-污水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214549",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-污水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "21454A",
+    "type": "TCH_PIPEFITTING",
+    "layer": "PIPE-污水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "21454B",
+    "type": "TCH_PIPEFITTING",
+    "layer": "PIPE-污水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214550",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-污水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2145A0",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-给水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2145A8",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-给水",
+    "entity_linetype": "ByBlock",
+    "entity_color": 0.0,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2145A9",
+    "type": "TCH_PIPEFITTING",
+    "layer": "PIPE-给水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 0.0,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2145AA",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-给水",
+    "entity_linetype": "ByBlock",
+    "entity_color": 0.0,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2145AB",
+    "type": "TCH_PIPEFITTING",
+    "layer": "PIPE-给水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 0.0,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2145AD",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-给水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2145B0",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-给水",
+    "entity_linetype": "ByBlock",
+    "entity_color": 0.0,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2145B3",
+    "type": "TCH_PIPEFITTING",
+    "layer": "PIPE-给水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 0.0,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2145B4",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-给水",
+    "entity_linetype": "ByBlock",
+    "entity_color": 0.0,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2145B5",
+    "type": "TCH_PIPEFITTING",
+    "layer": "PIPE-给水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 0.0,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2145BF",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-给水",
+    "entity_linetype": "ByBlock",
+    "entity_color": 0.0,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2145C0",
+    "type": "TCH_PIPEFITTING",
+    "layer": "PIPE-给水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 0.0,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2145C1",
+    "type": "TCH_PIPEFITTING",
+    "layer": "PIPE-给水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 0.0,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2145C2",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-给水",
+    "entity_linetype": "ByBlock",
+    "entity_color": 0.0,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2145FD",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214602",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214607",
+    "type": "TCH_PIPE",
+    "layer": "PIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214608",
+    "type": "TCH_PIPEFITTING",
+    "layer": "PIPE-雨水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "21463B",
+    "type": "TCH_PIPE",
+    "layer": "S-PIPE-废水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "21463E",
+    "type": "TCH_ELEVATION",
+    "layer": "S-PIPE-废水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214640",
+    "type": "TCH_PIPEFITTING",
+    "layer": "S-PIPE-废水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214641",
+    "type": "TCH_PIPE",
+    "layer": "S-PIPE-废水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214642",
+    "type": "TCH_PIPEFITTING",
+    "layer": "S-PIPE-废水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214643",
+    "type": "TCH_PIPE",
+    "layer": "S-PIPE-废水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "214645",
+    "type": "TCH_ELEVATION",
+    "layer": "S-PIPE-废水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2146C1",
+    "type": "TCH_PIPE",
+    "layer": "S-PIPE-废水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 0.5,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2146C2",
+    "type": "TCH_PIPE",
+    "layer": "S-VPIPE-废水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2146C3",
+    "type": "TCH_PIPEFITTING",
+    "layer": "S-VPIPE-废水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2146C4",
+    "type": "TCH_PIPEFITTING",
+    "layer": "S-VPIPE-废水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2146C5",
+    "type": "TCH_EQUIPMENT",
+    "layer": "S-PIPE-废水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 0.5,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  },
+  {
+    "handle": "2146C6",
+    "type": "TCH_PIPEFITTING",
+    "layer": "S-PIPE-废水",
+    "entity_linetype": "BYLAYER",
+    "entity_color": 256,
+    "linetype_scale": 1,
+    "lineweight": -1,
+    "polyline_constant_width": null
+  }
+]

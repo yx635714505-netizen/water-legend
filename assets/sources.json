@@ -1,0 +1,30 @@
+[
+  {
+    "id": "ref1",
+    "file": "03-安乡王府-水施.dwg",
+    "original": "D:\\水用底图\\参照图\\03-安乡王府-水施.dwg",
+    "sha256": "53EA33F6491A45B2E0BCF7C291BD00563F8DF49ABC2D169962ADCED3ADD21C5A",
+    "bytes": 1668448
+  },
+  {
+    "id": "ref2",
+    "file": "03-蛇形山扶洲周府-水施_t8.dwg",
+    "original": "D:\\水用底图\\参照图\\03-蛇形山扶洲周府-水施_t8.dwg",
+    "sha256": "17E439AE2C6BD9EDC6258F8D2199D82FF1AB6BC0F9B7919EE4400453C1989FAF",
+    "bytes": 584184
+  },
+  {
+    "id": "ref3",
+    "file": "03-赵府别墅-水施_t8.dwg",
+    "original": "D:\\水用底图\\参照图\\03-赵府别墅-水施_t8.dwg",
+    "sha256": "ACC4841333C89F2C34A64BFBFB3D6F1F7E9A08CC70ABFE2A158CC5CF5B2227A4",
+    "bytes": 4466967
+  },
+  {
+    "id": "ref4",
+    "file": "邵东市清水村申府给排水_t8.dwg",
+    "original": "D:\\水用底图\\参照图\\邵东市清水村申府给排水_t8.dwg",
+    "sha256": "9CAB118F7CCDCF72881240E02EDFAC48867938E80FFA14AFA6D44DD74DEA7ED5",
+    "bytes": 1336704
+  }
+]
