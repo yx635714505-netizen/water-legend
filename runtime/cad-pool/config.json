@@ -1,0 +1,12 @@
+{
+  "maxWorkers": 5,
+  "maxOutstandingJobs": 5,
+  "acadExe": "C:/Program Files/Autodesk/AutoCAD 2020/acad.exe",
+  "template": "C:/Tangent/TArchT20V8/sys23x64/acad.dwt",
+  "profileSource": "TArch20V8",
+  "profilePrefix": "CodexCAD_",
+  "registryProfiles": "HKCU:\\Software\\Autodesk\\AutoCAD\\R23.1\\ACAD-3001:804\\Profiles",
+  "startupTimeoutSeconds": 180,
+  "jobTimeoutSeconds": 3600,
+  "exitTimeoutSeconds": 30
+}

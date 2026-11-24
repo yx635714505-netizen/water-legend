@@ -1,0 +1,184 @@
+{
+  "bases": [],
+  "symbols": {
+    "LEAD": {
+      "handle": "13309",
+      "source": "system"
+    },
+    "VALVE": {
+      "handle": "13226",
+      "source": "system"
+    },
+    "ARROW": {
+      "handle": "13342",
+      "source": "system"
+    },
+    "ELEV": {
+      "handle": "132FB",
+      "source": "system"
+    },
+    "TITLE": {
+      "handle": "13034",
+      "source": "system"
+    }
+  },
+  "frames": [
+    {
+      "name": "水施 校验",
+      "b": [
+        0,
+        0,
+        42000,
+        29700
+      ],
+      "scale": 100
+    },
+    {
+      "scale": 100,
+      "b": [
+        42000,
+        0,
+        84000,
+        29700
+      ],
+      "name": "水施 系统校验"
+    }
+  ],
+  "ops": [
+    {
+      "t": "p",
+      "h": "JPLAN",
+      "a": [
+        4000,
+        12000
+      ],
+      "b": [
+        13000,
+        12000
+      ],
+      "dn": 50,
+      "show": true,
+      "network": "cold"
+    },
+    {
+      "t": "p",
+      "h": "JPLAN",
+      "a": [
+        13000,
+        12000
+      ],
+      "b": [
+        19000,
+        16000
+      ],
+      "dn": 20,
+      "show": true,
+      "network": "cold"
+    },
+    {
+      "t": "s",
+      "h": "JDOT",
+      "a": [
+        13000,
+        12000
+      ],
+      "dn": 50
+    },
+    {
+      "t": "s",
+      "h": "SIDE_RIGHT",
+      "a": [
+        25000,
+        12000
+      ]
+    },
+    {
+      "dn": 100,
+      "t": "p",
+      "b": [
+        57000,
+        4000
+      ],
+      "h": "YSYS",
+      "a": [
+        57000,
+        16000
+      ],
+      "show": true
+    },
+    {
+      "txt": "-0.450",
+      "a": [
+        57000,
+        4000
+      ],
+      "t": "s",
+      "h": "ELEV",
+      "layer": "DIM_污水"
+    },
+    {
+      "txt": "i=0.010",
+      "a": [
+        55500,
+        4000
+      ],
+      "t": "s",
+      "h": "ARROW",
+      "layer": "DIM_污水"
+    },
+    {
+      "t": "l",
+      "txt": "就近接入室外雨水管",
+      "b": [
+        59000,
+        6000
+      ],
+      "layer": "DIM_雨水",
+      "left": false,
+      "h": "LEAD",
+      "a": [
+        57000,
+        4000
+      ]
+    },
+    {
+      "txt": "原生系统试印",
+      "a": [
+        55000,
+        1500
+      ],
+      "t": "title",
+      "h": "TITLE"
+    },
+    {
+      "a": [
+        19000,
+        16000
+      ],
+      "t": "s",
+      "h": "VALVE"
+    }
+  ],
+  "dimensions": [],
+  "connections": [
+    {
+      "network": "cold",
+      "from": [
+        4000,
+        12000
+      ],
+      "to": [
+        [
+          19000,
+          16000
+        ]
+      ]
+    }
+  ],
+  "sources": {
+    "system": {
+      "sha256": "745285621cf30779e2d9f177834cf1c58544b72da011f2bdfd93814ead709aee",
+      "path": "../assets/system-diagram/东郊王府_给排水管道系统图_试04.dwg"
+    }
+  }
+}

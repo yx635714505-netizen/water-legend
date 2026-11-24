@@ -25,4 +25,6 @@ git -C "$HOME/.codex/skills/water-legend" rev-parse --short HEAD
 
 ## 原生 DWG 出图环境
 
+新服务器请继续阅读[跨机出图与验收流程](runtime/README.md)。随库的 [AGENTS.md](AGENTS.md) 收录本机工作区的水施指令，由技能首页显式引用。每个新项目的建筑底图、选取句柄、设计坐标和工程参数在项目工作目录维护。
+
 原生出图另需可用的 Windows、AutoCAD 与匹配的天正组件及字体。本机已验证的组合为 AutoCAD 2020 与 T20 天正建筑 V8.0。服务器首次出图时，按[后台出图与验证](references/后台出图与验证.md)定位本机模块，在工作副本中保存、重开并试印，核对原生对象、中文和线型。
