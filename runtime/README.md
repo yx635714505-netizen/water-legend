@@ -1,5 +1,22 @@
 # 跨机出图与验收
 
+## 所有项目共用的出图配置
+
+建筑 DWG 提供本项目的几何、户别、图框和设备位置。生成器从技能的线型母版取原生对象，用 `drawing-profile.json` 固定模型和布局显示。该配置采用洲口蘭園审查版的 `MSLTSCALE=0`、`PSLTSCALE=1`、`LWDISPLAY=1`。线型定义、按层颜色和实体覆盖仍按母版。项目绘图脚本只生成项目清单和几何，正式任务用当前技能重新 prepare，避免复用历史任务包里的 Engine.dll。平面和系统的纸面表达对照随库的[洲口首层试印](baseline/洲口蘭園-首层排版.png)和[洲口系统试印](baseline/洲口蘭園-系统排版.png)。图框、设备及给水系统形式取本项目实际条件。
+
+后台生成后，`verify` 比较源线型母版的 SHA-256、成品管对象的图层颜色及线型、实体线宽、模型和每个布局的显示变量。房间服务清单的系统接口需要原生引出标注。默认检查系统端点；引线起于阀门或合画接口时，给该条 service 填 `systemLeaderPoint`，取实际阀门或接口的模型坐标，并在试印中核对房间名和合画范围。
+
+正式交付执行以下步骤。由绘图者完成逐页复核和记录，无需另设用户批准环节。
+
+```powershell
+python runtime/water.py verify $job.root
+python runtime/water.py review-template $job.root $reviewPath
+# 对照本次图纸填写 $reviewPath 后，交付到一个新文件名
+python runtime/water.py deliver $job.root $reviewPath $destinationDwg
+```
+
+核对表自动绑定本项目的建筑 DWG、成品 DWG 和每张试印 PDF。每张填写 `layoutReview`，记录实际核过的图名、图签、版面和引注避让。平面另填 `baseComparison`（按轴网与建筑原图叠合；写明保留的墙柱、门窗、尺寸链和清掉的细部）和 `colorAndLineReview`（彩色模型与实印的具体管段、线宽、线型节距）。系统图另填 `leaderReview` 和 `colorAndLineReview`，核对端点、文字、楼层线及管径。发现问题先修订，再用新试印复核。工程判断与视觉对照需要实际看图；文件校验用于防止漏页或误用旧版记录。
+
 ## Windows 工作机准备
 
 在克隆目录打开 PowerShell。准备 Python 3.8 或更高版本、64 位 AutoCAD 2020、匹配的天正 T20 V8.0 原生模块、Windows .NET Framework 4.x 编译器、中文字体及项目打印样式。启动器从本机 CAD 安装目录引用托管 DLL，原生管道与文字接口对应上述天正版本。PDF 试印工具使用 A3 横幅、DWG To PDF.pc3 与 monochrome.ctb。项目有其他纸幅、CTB 或版本时，应按目标机和实际项目适配并试印。
@@ -27,8 +44,10 @@ python runtime/water.py prepare runtime/commission.json $pkg
 $job = & $pool -Action submit -Package $pkg -Name '水施原生绘图校验' | ConvertFrom-Json
 (& $pool -Action status | ConvertFrom-Json).jobs | Where-Object id -eq $job.id
 # 此任务显示 succeeded 后执行
-python runtime/water.py verify $job.root
+python runtime/water.py check-baseline $job.root
 ```
+
+运行基准比较的 Python 解释器需安装 `pypdfium2`（`python -m pip install pypdfium2`）。命令先执行成品回读，再用同一渲染器比较两张试印与随库 PDF 的纸面尺寸及 144 dpi 灰度像素。记录 Git 提交和结果。出现差异时核对 CAD、天正、字体、CTB、PC3 与纸型并重新试印。基准 PDF 随技能版本管理。
 
 打开该任务 output/page0.pdf 和 page1.pdf，按图对照给水管与标径、立管、露台墙侧排、阀门、系统管段、引注、坡度、标高和图名。验收记录应包括实际使用的 Git 提交、CAD 与天正版本、试印件和读回结果。
 

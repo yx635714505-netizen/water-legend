@@ -16,6 +16,8 @@ git clone git@github.com:yx635714505-netizen/water-legend.git "$HOME/.codex/skil
 
 ## 更新
 
+不同机器复用时检出同一 Git 提交，并按[跨机出图与验收流程](runtime/README.md)运行两页试图和 `check-baseline`。仓库提供母版、图例、运行源码、显示配置、基准 PDF 及排版参照。目标机需安装匹配的 AutoCAD、天正、中文字体和打印配置。每次正式交付均运行成品回读并逐页复核。
+
 本机在 Skill 源目录中核对修改、提交并推送至 `main`。服务器拉取已发布版本：
 
 ```sh
