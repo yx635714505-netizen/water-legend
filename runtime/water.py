@@ -35,6 +35,24 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def check_model_arrangement(frames):
+    front = [f for f in frames if any(word in f["name"] for word in ("目录", "说明", "图例"))]
+    drawings = [f for f in frames if f not in front]
+    if not front or not drawings:
+        return
+    require(frames == front + drawings, "目录和说明页须先于专业图页")
+    for column in (front, drawings):
+        left = column[0]["b"][0]
+        for index, frame in enumerate(column):
+            box = frame["b"]
+            require(abs(box[0] - left) <= 1, "模型图框应分列左对齐：" + frame["name"])
+            if index:
+                require(box[3] < column[index-1]["b"][1], "同列图框应按图序向下留缝排列：" + frame["name"])
+    require(drawings[0]["b"][0] > max(f["b"][2] for f in front)
+            and abs(front[0]["b"][3] - drawings[0]["b"][3]) <= 1,
+            "模型空间应左列目录说明、右列平面系统，两列顶边对齐")
+
+
 def prepare(args):
     target = args.package.resolve()
     sources = {}
@@ -58,6 +76,7 @@ def prepare(args):
             require(item["source"] in sources, "Unknown DWG source")
         frames = spec["frames"]
         require(frames and len({f["name"] for f in frames}) == len(frames), "Unique layouts required")
+        check_model_arrangement(frames)
         for f in frames:
             x,y,r,t = f["b"]
             require(f["scale"] > 0 and abs(r-x-420*f["scale"]) < .1 and
@@ -134,6 +153,13 @@ def verify(job):
         require((out/f"page{i}.pdf").read_bytes().startswith(b"%PDF-"), f"Missing PDF {i}")
     handles = load(out/"handles.json")
     rows = {e["h"]: e for e in load(out/"aud.json")}
+    check_model_arrangement(cfg["frames"])
+    for f in cfg["frames"]:
+        if "frameBlock" in f:
+            boxes = [e["b"] for e in rows.values() if e["t"] == "INSERT" and e["n"] == f["frameBlock"]]
+            require(len(boxes) == 1 and boxes[0] and
+                    max(abs(x-y) for x,y in zip(boxes[0], f["b"])) <= f["scale"] * .1,
+                    "成品模型空间图框与该页窗口不符：" + f["name"])
     require(len(set(handles)) == len(handles) == len(cfg["ops"]), "Incomplete CAD operations")
     style_index = load(ASSETS/"pipe-style/管道线型索引.json")
     require(digest(job/"input/style.dwg") == style_index["sha256"], "管道母版与技能索引不符")
