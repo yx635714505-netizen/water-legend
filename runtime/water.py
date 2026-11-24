@@ -10,6 +10,8 @@ import subprocess
 
 HERE = Path(__file__).resolve().parent
 ASSETS = HERE.parent / "assets"
+BASEPLATE = ASSETS / "baseplate/水施通用底板.dwg"
+BASEPLATE_SHA256 = "5f2c825ebb9cf977067c2961003426d3a97388528f472e553aefba1ce3cf383f"
 PIPES = dict(zip(
     "JPLAN JSYS WPLAN WSYS FPLAN FSYS YPLAN YSYS JDOT WDOT YDOT FDOT".split(),
     "84101 85A47 85267 85BC5 85B92 85A81 85344 85C53 8411B 84144 85287 84DD2".split()))
@@ -41,11 +43,12 @@ def prepare(args):
     else:
         spec = load(args.input)
         for name, entry in spec.get("sources", {}).items():
-            require(re.fullmatch(r"[a-z][a-z0-9_-]*", name) and name not in ("style","side","pot"), name)
+            require(re.fullmatch(r"[a-z][a-z0-9_-]*", name) and name not in ("style","side","pot","baseplate"), name)
             source = (args.input.resolve().parent / entry["path"]).resolve()
             require(digest(source) == entry["sha256"].lower(), "Source changed: " + name)
             sources[name] = source
-        sources.update(style=ASSETS/"pipe-style/水施线形参照.dwg",
+        require(digest(BASEPLATE) == BASEPLATE_SHA256, "水施底板与发布版不符")
+        sources.update(baseplate=BASEPLATE, style=ASSETS/"pipe-style/水施线形参照.dwg",
                        side=ASSETS/"pipe-style/露台墙侧排口.dwg",
                        pot=ASSETS/"sources/03-蛇形山扶洲周府-水施_t8.dwg")
         spec.setdefault("symbols", {}).update(SIDE_LEFT=dict(source="side", handle="79"),
@@ -109,6 +112,8 @@ def verify(job):
     audit = out/"drawing-profile.json"
     require(audit.is_file(), "缺少成品 DWG 的模型与各布局显示配置回读记录，请用当前 water.py prepare 生成。")
     actual = load(audit)
+    require(digest(job/"input/baseplate.dwg") == BASEPLATE_SHA256 and
+            actual.get("baseConfig") == "TCH_PSCONFIG", "缺少发布底板或成品天正水施配置")
     expected_views = {"Model", *(frame["name"] for frame in cfg["frames"])}
     require(set(actual["views"]) == expected_views, "显示配置回读未覆盖实际布局")
     profile = load(HERE/"drawing-profile.json")
@@ -141,6 +146,9 @@ def verify(job):
         if op["h"] in ("SIDE_LEFT", "SIDE_RIGHT"):
             require(e["t"] == "TCH_EQUIPMENT" and e["l"] == op.get("layer","EQUIP_雨水")
                     and point(e["gp"][0]) == point(op["a"]), "Side outlet "+h)
+        if op["h"] == "WPLAN" and op["t"] == "p" and op["dn"] == 200:
+            require(abs(actual["sewageWidths"].get(h, 0) - 60) < .01,
+                    "平面 DN200 污水管原生绘制宽度应为 60 模型毫米："+h)
         if op["h"] in PIPES:
             expected = native[PIPES[op["h"]]]
             layer = style_index["layers"][expected["layer"]]
@@ -225,6 +233,35 @@ def check_baseline(job):
             finally:
                 bitmap.close()
                 page.close()
+
+    # Sample the straight part of the DN200 commissioning pipe, away from its label.
+    from statistics import median
+    with pdf.PdfDocument(job/"output/page0.pdf") as document:
+        page = document[0]
+        points_per_mm = 72 / 25.4
+        width, height = page.get_size()
+        crop = (45 * points_per_mm, 78 * points_per_mm,
+                width - 65 * points_per_mm, height - 82 * points_per_mm)
+        scale = 12
+        bitmap = page.render(scale=scale, crop=crop, grayscale=True)
+        try:
+            data = bytes(bitmap.buffer)
+            middle = bitmap.height // 2
+            strokes = []
+            for x in range(bitmap.width):
+                if data[middle * bitmap.stride + x] >= 128:
+                    continue
+                top = bottom = middle
+                while top > 0 and data[(top - 1) * bitmap.stride + x] < 128:
+                    top -= 1
+                while bottom + 1 < bitmap.height and data[(bottom + 1) * bitmap.stride + x] < 128:
+                    bottom += 1
+                strokes.append((bottom - top + 1) / (scale * points_per_mm))
+            require(strokes and abs(median(strokes) - 0.60) <= 0.04,
+                    "DN200 污水标样的 1:100 纸面宽度与 0.60 mm 基准不符")
+        finally:
+            bitmap.close()
+            page.close()
 
     for i, frame in enumerate(example["frames"]):
         filename = f"page{i}.pdf"
