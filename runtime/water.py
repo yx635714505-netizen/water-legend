@@ -7,6 +7,7 @@ from pathlib import Path
 import re
 import shutil
 import subprocess
+import riser_audit
 
 HERE = Path(__file__).resolve().parent
 ASSETS = HERE.parent / "assets"
@@ -35,6 +36,20 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def production_libraries():
+    catalog = load(ASSETS/"legend-catalog.json")
+    layout_index = ASSETS/"layout-v2/manifest.json"
+    layout = load(layout_index)["native_source"]
+    return {"pot": (ASSETS/catalog["source_dwg"], catalog["sha256"]),
+            "layout": (layout_index.parent/layout["path"], layout["sha256"])}, catalog["production_symbols"]
+
+
+def commissioning(cfg):
+    example = load(HERE/"commission.json")
+    return not cfg.get("bases") and cfg.get("sources") == example["sources"] and all(
+        cfg.get(key) == example[key] for key in ("frames", "ops", "dimensions", "connections"))
+
+
 def check_model_arrangement(frames):
     front = [f for f in frames if any(word in f["name"] for word in ("目录", "说明", "图例"))]
     drawings = [f for f in frames if f not in front]
@@ -61,22 +76,32 @@ def prepare(args):
     else:
         spec = load(args.input)
         for name, entry in spec.get("sources", {}).items():
-            require(re.fullmatch(r"[a-z][a-z0-9_-]*", name) and name not in ("style","side","pot","baseplate"), name)
+            require(re.fullmatch(r"[a-z][a-z0-9_-]*", name) and name not in ("style","side","pot","layout","baseplate"), name)
             source = (args.input.resolve().parent / entry["path"]).resolve()
             require(digest(source) == entry["sha256"].lower(), "Source changed: " + name)
             sources[name] = source
         require(digest(BASEPLATE) == BASEPLATE_SHA256, "水施底板与发布版不符")
         sources.update(baseplate=BASEPLATE, style=ASSETS/"pipe-style/水施线形参照.dwg",
-                       side=ASSETS/"pipe-style/露台墙侧排口.dwg",
-                       pot=ASSETS/"sources/03-蛇形山扶洲周府-水施_t8.dwg")
+                       side=ASSETS/"pipe-style/露台墙侧排口.dwg")
+        libraries, equipment = production_libraries()
+        for name, (path, sha) in libraries.items():
+            require(digest(path) == sha.lower(), "随包原生资产与对象索引不符：" + name)
+            sources[name] = path
         spec.setdefault("symbols", {}).update(SIDE_LEFT=dict(source="side", handle="79"),
-            SIDE_RIGHT=dict(source="side", handle="83"), CLEAN=dict(source="pot",handle="20A8"),
-            WELL=dict(source="pot",handle="208B"), POT=dict(source="pot",handle="2072"))
+                                            SIDE_RIGHT=dict(source="side", handle="83"))
+        for name, record in equipment.items():
+            spec["symbols"][name] = dict(source="pot", handle=record["handle"])
         for item in list(spec["symbols"].values()) + spec["bases"]:
             require(item["source"] in sources, "Unknown DWG source")
+        for base in spec["bases"]:
+            scale = base.get("scale", 1)
+            require(type(scale) in (int,float) and 0 < scale < float("inf"), "底图块等比缩放必须为正有限数")
         frames = spec["frames"]
         require(frames and len({f["name"] for f in frames}) == len(frames), "Unique layouts required")
         check_model_arrangement(frames)
+        if not commissioning(spec):
+            require("ar" in sources, "逐层立管验收需要建筑原图 ar")
+            riser_audit.plan_windows(spec)
         for f in frames:
             x,y,r,t = f["b"]
             require(f["scale"] > 0 and abs(r-x-420*f["scale"]) < .1 and
@@ -84,6 +109,8 @@ def prepare(args):
         for op in spec["ops"]:
             require(op["t"] in ("p","s","l","d","n","line","title"), "Unknown operation")
             require(op["h"] in set(PIPES) | {"BOWL"} | spec["symbols"].keys(), "Unknown sample")
+            if op["h"] in equipment:
+                op.setdefault("layer", equipment[op["h"]]["layer"])
             if op["t"] == "p":
                 require(op["h"] in PIPES and op["dn"] > 0 and op["a"] != op["b"], "Pipe geometry")
         for chain in spec["dimensions"]:
@@ -105,7 +132,7 @@ def prepare(args):
     commands += ['(command "_.NETLOAD" (strcat (getenv "CAD_POOL_JOB") "/scripts/Engine.dll"))',
                  "ANVISIT" if args.inspect else "ZBUILD"]
     (scripts/"command.scr").write_bytes(("\r\n".join(commands)+"\r\n").encode("gbk"))
-    expected = ["architecture.json"] if args.inspect else ["drawing.dwg","aud.json","handles.json","drawing-profile.json"] + [
+    expected = ["architecture.json"] if args.inspect else ["drawing.dwg","aud.json","handles.json","drawing-profile.json","riser-geometry.json"] + [
         f"page{i}.pdf" for i in range(len(spec["frames"]))]
     if not args.inspect:
         shutil.copyfile(HERE/"drawing-profile.json", scripts/"drawing-profile.json")
@@ -153,6 +180,20 @@ def verify(job):
         require((out/f"page{i}.pdf").read_bytes().startswith(b"%PDF-"), f"Missing PDF {i}")
     handles = load(out/"handles.json")
     rows = {e["h"]: e for e in load(out/"aud.json")}
+    if not commissioning(cfg) or (job/"input/ar.dwg").exists():
+        evidence = out/"riser-geometry.json"
+        try:
+            architecture = job/"input/ar.dwg"
+            require(architecture.is_file() and
+                    digest(architecture) == cfg.get("sources", {}).get("ar", {}).get("sha256", "").lower(),
+                    "立管楼层清单对应的建筑原图缺失或已变更")
+            require(evidence.is_file(), "缺成品立管及墙柱几何回读，需要用当前技能重开 DWG")
+            risers = riser_audit.check(cfg, load(evidence), actual["dwgSha256"], rows.values())
+        except (ValueError, KeyError, TypeError) as exc:
+            save(out/"riser-audit.json", dict(dwgSha256=actual["dwgSha256"], passed=False, errors=[str(exc)]))
+            raise
+        save(out/"riser-audit.json", risers)
+        require(risers["passed"], "立管逐层验收失败：\n" + "\n".join(risers["errors"]))
     check_model_arrangement(cfg["frames"])
     for f in cfg["frames"]:
         if "frameBlock" in f:
@@ -165,10 +206,17 @@ def verify(job):
     require(digest(job/"input/style.dwg") == style_index["sha256"], "管道母版与技能索引不符")
     profiles = style_index["object_profiles"]
     native = {h:p for p in profiles for h in p["handles"]}
+    libraries, equipment = production_libraries()
+    for name, (_, sha) in libraries.items():
+        require(digest(job/("input/"+name+".dwg")) == sha.lower(), "成品任务包母版与索引不符：" + name)
     networks = {}
     for index, (h, op) in enumerate(zip(handles,cfg["ops"])):
         e = rows[h]
         require(e["b"] is not None, f"Missing native extents at operation {index}")
+        if op["h"] in equipment:
+            expected = equipment[op["h"]]
+            require(e["t"] == expected["type"] and e["l"] == op.get("layer",expected["layer"]),
+                    "井、池或清扫口原生类型或图层不符：" + h)
         if op["h"] in ("SIDE_LEFT", "SIDE_RIGHT"):
             require(e["t"] == "TCH_EQUIPMENT" and e["l"] == op.get("layer","EQUIP_雨水")
                     and point(e["gp"][0]) == point(op["a"]), "Side outlet "+h)
@@ -301,30 +349,57 @@ def review_template(job):
     architecture = job/"input/ar.dwg"
     require(architecture.is_file(), "项目任务包缺少建筑底图 input/ar.dwg")
     pages = {}
+    plan_layouts = {plan.get("layout") for plan in cfg.get("riserPlans", [])}
     for i, frame in enumerate(cfg["frames"]):
         name = frame["name"]
         page = {"pdfSha256": digest(job/f"output/page{i}.pdf"), "layoutReview": ""}
-        if "平面" in name:
+        if "平面" in name or name in plan_layouts:
             page.update(baseComparison="", colorAndLineReview="")
+            proof = job / "output" / f"model-color-{i}.png"
+            page["baseColorProofSha256"] = digest(proof) if proof.is_file() else ""
+            page["openingReview"] = {"result": "", "locations": "", "components": ""}
         if "系统" in name:
             page.update(leaderReview="", colorAndLineReview="")
         pages[name] = page
+    floors = {floor: "" for floor in cfg["riserStoreys"]}
     return dict(dwgSha256=digest(job/"output/drawing.dwg"),
-                architectureSha256=digest(architecture), pages=pages)
+                architectureSha256=digest(architecture), pages=pages, riserFloorReviews=floors,
+                riserScheduleSha256=digest(job/"scripts/cfg.json"),
+                riserAuditSha256=digest(job/"output/riser-audit.json"))
 
 
 def deliver(job, review_path, destination):
     verify(job)
     expected = review_template(job)
     review = load(review_path)
-    for field in ("dwgSha256","architectureSha256"):
+    for field in ("dwgSha256","architectureSha256","riserScheduleSha256","riserAuditSha256"):
         require(review.get(field) == expected[field], "逐页核对记录的文件版本不符："+field)
+    floors = review.get("riserFloorReviews", {})
+    require(floors.keys() == expected["riserFloorReviews"].keys(), "立管人工回读缺建筑层位")
+    for floor, note in floors.items():
+        require(isinstance(note, str) and note.strip(), floor + " 缺逐层对照建筑原图及立管清单的核对记录")
     pages = review.get("pages", {})
     require(pages.keys() == expected["pages"].keys(), "逐页核对记录与实际出图清单不符")
-    for name, fields in expected["pages"].items():
+    for i, (name, fields) in enumerate(expected["pages"].items()):
         page = pages[name]
         require(page.get("pdfSha256") == fields["pdfSha256"], "需复核本版试印："+name)
-        for field in fields.keys() - {"pdfSha256"}:
+        if "openingReview" in fields:
+            proof = job / "output" / f"model-color-{i}.png"
+            require(fields["baseColorProofSha256"] and
+                    page.get("baseColorProofSha256") == fields["baseColorProofSha256"],
+                    f"{name} 缺本页彩色模型核对图或文件已变化：{proof.name}")
+            from PIL import Image
+            with Image.open(proof) as image:
+                require(image.format == "PNG" and image.mode in ("RGB", "RGBA", "P"),
+                        f"{name} 须提供彩色模型 PNG")
+                image.load()
+            record = page.get("openingReview")
+            require(isinstance(record, dict) and record.get("result") in ("通过", "原图无门窗"),
+                    f"{name} 门窗淡显未通过复核")
+            for key in ("locations", "components"):
+                require(isinstance(record.get(key), str) and record[key].strip(),
+                        f"{name} 缺门窗位置、构件或无门窗依据：{key}")
+        for field in fields.keys() - {"pdfSha256", "baseColorProofSha256", "openingReview"}:
             require(isinstance(page.get(field), str) and page[field].strip(),
                     f"{name} 缺少 {field} 的实际核对记录")
     require(destination.suffix.lower() == ".dwg", "交付文件应为 DWG")

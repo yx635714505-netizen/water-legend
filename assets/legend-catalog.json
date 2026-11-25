@@ -1,8 +1,8 @@
 {
-  "version": "1.0",
-  "canonical_source": "ref2",
-  "source_dwg": "sources/03-蛇形山扶洲周府-水施_t8.dwg",
-  "status": "图例表视觉核对；符号句柄来自原始来源，非标准母版的新句柄",
+  "version": "2.0",
+  "canonical_source": "pot",
+  "source_dwg": "native-library/水施设备与图例.dwg",
+  "status": "当前生产母版。对象句柄绑定本文件的 SHA256，多实体设备按条目成组提取。",
   "entries": [
     {
       "id": "P01",
@@ -11,12 +11,12 @@
       "line_mark": "J",
       "riser_prefix": "JL",
       "unit": "米",
-      "source_name_handle": "2E2",
+      "source_name_handle": "FF",
       "symbol_handles": [
-        "2E1",
-        "2E3",
-        "303",
-        "304"
+        "FE",
+        "100",
+        "121",
+        "122"
       ],
       "source_row_text": [
         "JL-1"
@@ -29,12 +29,12 @@
       "line_mark": "W",
       "riser_prefix": "WL",
       "unit": "米",
-      "source_name_handle": "28A",
+      "source_name_handle": "A7",
       "symbol_handles": [
-        "288",
-        "289",
-        "307",
-        "308"
+        "A5",
+        "A6",
+        "125",
+        "126"
       ],
       "source_row_text": []
     },
@@ -45,12 +45,12 @@
       "line_mark": "F",
       "riser_prefix": "FL",
       "unit": "米",
-      "source_name_handle": "2B1",
+      "source_name_handle": "CE",
       "symbol_handles": [
-        "2AF",
-        "2B0",
-        "2F9",
-        "2FA"
+        "CC",
+        "CD",
+        "117",
+        "118"
       ],
       "source_row_text": []
     },
@@ -61,12 +61,12 @@
       "line_mark": "LN",
       "riser_prefix": "NL",
       "unit": "米",
-      "source_name_handle": "2A0",
+      "source_name_handle": "BD",
       "symbol_handles": [
-        "29E",
-        "29F",
-        "309",
-        "30A"
+        "BB",
+        "BC",
+        "127",
+        "128"
       ],
       "source_row_text": [
         "按需",
@@ -80,12 +80,12 @@
       "line_mark": "YT",
       "riser_prefix": "YTL",
       "unit": "米",
-      "source_name_handle": "2AA",
+      "source_name_handle": "C7",
       "symbol_handles": [
-        "2A8",
-        "2A9",
-        "30B",
-        "30C"
+        "C5",
+        "C6",
+        "129",
+        "12A"
       ],
       "source_row_text": [
         "按需"
@@ -98,12 +98,12 @@
       "line_mark": "Y",
       "riser_prefix": "YL",
       "unit": "米",
-      "source_name_handle": "2B8",
+      "source_name_handle": "D5",
       "symbol_handles": [
-        "2B6",
-        "2B7",
-        "2FB",
-        "2FC"
+        "D3",
+        "D4",
+        "119",
+        "11A"
       ],
       "source_row_text": [
         "按需"
@@ -116,12 +116,12 @@
       "line_mark": "YW",
       "riser_prefix": "YWL",
       "unit": "米",
-      "source_name_handle": "2EA",
+      "source_name_handle": "107",
       "symbol_handles": [
-        "2E8",
-        "2E9",
-        "2FD",
-        "2FE"
+        "105",
+        "106",
+        "11B",
+        "11C"
       ],
       "source_row_text": [
         "按需"
@@ -134,12 +134,12 @@
       "line_mark": "YF",
       "riser_prefix": "YFL",
       "unit": "米",
-      "source_name_handle": "2C0",
+      "source_name_handle": "DD",
       "symbol_handles": [
-        "2BE",
-        "2BF",
-        "305",
-        "306"
+        "DB",
+        "DC",
+        "123",
+        "124"
       ],
       "source_row_text": [
         "按需"
@@ -152,12 +152,12 @@
       "line_mark": "T",
       "riser_prefix": "TL",
       "unit": "米",
-      "source_name_handle": "2C8",
+      "source_name_handle": "E5",
       "symbol_handles": [
-        "2C6",
-        "2C7",
-        "2FF",
-        "300"
+        "E3",
+        "E4",
+        "11D",
+        "11E"
       ],
       "source_row_text": [
         "按需"
@@ -170,12 +170,12 @@
       "line_mark": "Z",
       "riser_prefix": "ZL",
       "unit": "米",
-      "source_name_handle": "2D4",
+      "source_name_handle": "F1",
       "symbol_handles": [
-        "2D9",
-        "2DA",
-        "301",
-        "302"
+        "F6",
+        "F7",
+        "11F",
+        "120"
       ],
       "source_row_text": [
         "按需"
@@ -186,9 +186,9 @@
       "name": "闸阀",
       "variant": null,
       "panel": "devices",
-      "source_name_handle": "5E3",
+      "source_name_handle": "3FE",
       "symbol_handles": [
-        "315"
+        "132"
       ],
       "source_row_text": [
         "个",
@@ -202,9 +202,9 @@
       "name": "止回阀",
       "variant": null,
       "panel": "devices",
-      "source_name_handle": "5F7",
+      "source_name_handle": "412",
       "symbol_handles": [
-        "31D"
+        "13A"
       ],
       "source_row_text": [
         "个",
@@ -219,9 +219,9 @@
       "name": "截止阀",
       "variant": null,
       "panel": "devices",
-      "source_name_handle": "5F6",
+      "source_name_handle": "411",
       "symbol_handles": [
-        "30E"
+        "12B"
       ],
       "source_row_text": [
         "个",
@@ -235,11 +235,11 @@
       "name": "排气阀",
       "variant": null,
       "panel": "devices",
-      "source_name_handle": "5F5",
+      "source_name_handle": "410",
       "symbol_handles": [
-        "339",
-        "34A",
-        "34B"
+        "155",
+        "165",
+        "166"
       ],
       "source_row_text": [
         "个",
@@ -254,14 +254,14 @@
       "name": "水表",
       "variant": null,
       "panel": "devices",
-      "source_name_handle": "5F3",
+      "source_name_handle": "40E",
       "symbol_handles": [
-        "3A9",
-        "3AA",
-        "3AB",
-        "3AC",
-        "3AD",
-        "3AE"
+        "1C4",
+        "1C5",
+        "1C6",
+        "1C7",
+        "1C8",
+        "1C9"
       ],
       "source_row_text": [
         "套",
@@ -275,16 +275,16 @@
       "name": "减压阀组",
       "variant": null,
       "panel": "devices",
-      "source_name_handle": "5F2",
+      "source_name_handle": "40D",
       "symbol_handles": [
-        "3CE",
-        "3CF",
-        "3D0",
-        "3D1",
-        "3D2",
-        "3D3",
-        "3D4",
-        "3D5"
+        "1E9",
+        "1EA",
+        "1EB",
+        "1EC",
+        "1ED",
+        "1EE",
+        "1EF",
+        "1F0"
       ],
       "source_row_text": [
         "套",
@@ -299,9 +299,9 @@
       "name": "倒流防止器",
       "variant": null,
       "panel": "devices",
-      "source_name_handle": "5F4",
+      "source_name_handle": "40F",
       "symbol_handles": [
-        "32A"
+        "146"
       ],
       "source_row_text": [
         "套",
@@ -315,9 +315,9 @@
       "name": "角阀",
       "variant": null,
       "panel": "devices",
-      "source_name_handle": "5F1",
+      "source_name_handle": "40C",
       "symbol_handles": [
-        "3D8"
+        "1F3"
       ],
       "source_row_text": [
         "按需",
@@ -331,9 +331,9 @@
       "name": "水龙头",
       "variant": null,
       "panel": "devices",
-      "source_name_handle": "5F0",
+      "source_name_handle": "40B",
       "symbol_handles": [
-        "3E4"
+        "1FF"
       ],
       "source_row_text": [
         "按需",
@@ -348,9 +348,9 @@
       "name": "淋浴器",
       "variant": "阀门附件表表达",
       "panel": "devices",
-      "source_name_handle": "5EF",
+      "source_name_handle": "40A",
       "symbol_handles": [
-        "3EF"
+        "20A"
       ],
       "source_row_text": [
         "按需",
@@ -365,9 +365,9 @@
       "name": "P型存水弯",
       "variant": null,
       "panel": "devices",
-      "source_name_handle": "5E9",
+      "source_name_handle": "404",
       "symbol_handles": [
-        "564"
+        "37F"
       ],
       "source_row_text": [
         "按需",
@@ -382,9 +382,9 @@
       "name": "S型存水弯",
       "variant": null,
       "panel": "devices",
-      "source_name_handle": "5E8",
+      "source_name_handle": "403",
       "symbol_handles": [
-        "569"
+        "384"
       ],
       "source_row_text": [
         "按需",
@@ -399,10 +399,10 @@
       "name": "地漏",
       "variant": null,
       "panel": "devices",
-      "source_name_handle": "5E7",
+      "source_name_handle": "402",
       "symbol_handles": [
-        "56E",
-        "585"
+        "389",
+        "3A0"
       ],
       "source_row_text": [
         "按需",
@@ -417,10 +417,10 @@
       "name": "87型雨水斗",
       "variant": null,
       "panel": "devices",
-      "source_name_handle": "5E6",
+      "source_name_handle": "401",
       "symbol_handles": [
-        "578",
-        "57E"
+        "393",
+        "399"
       ],
       "source_row_text": [
         "按需",
@@ -435,9 +435,9 @@
       "name": "金属波纹管",
       "variant": null,
       "panel": "devices",
-      "source_name_handle": "5E5",
+      "source_name_handle": "400",
       "symbol_handles": [
-        "5A8"
+        "3C3"
       ],
       "source_row_text": [
         "按需",
@@ -450,9 +450,9 @@
       "name": "蹲式大便器（自带水封）",
       "variant": null,
       "panel": "devices",
-      "source_name_handle": "5EE",
+      "source_name_handle": "409",
       "symbol_handles": [
-        "493"
+        "2AE"
       ],
       "source_row_text": [
         "套",
@@ -467,10 +467,10 @@
       "name": "坐式大便器",
       "variant": null,
       "panel": "devices",
-      "source_name_handle": "5ED",
+      "source_name_handle": "408",
       "symbol_handles": [
-        "4AA",
-        "5C9"
+        "2C5",
+        "3E4"
       ],
       "source_row_text": [
         "套",
@@ -485,9 +485,9 @@
       "name": "污水池",
       "variant": null,
       "panel": "devices",
-      "source_name_handle": "5EC",
+      "source_name_handle": "407",
       "symbol_handles": [
-        "4EB"
+        "306"
       ],
       "source_row_text": [
         "套",
@@ -502,10 +502,10 @@
       "name": "洗脸盆",
       "variant": null,
       "panel": "devices",
-      "source_name_handle": "5EB",
+      "source_name_handle": "406",
       "symbol_handles": [
-        "4FD",
-        "53E"
+        "318",
+        "359"
       ],
       "source_row_text": [
         "套",
@@ -520,9 +520,9 @@
       "name": "洗涤盆",
       "variant": null,
       "panel": "devices",
-      "source_name_handle": "5EA",
+      "source_name_handle": "405",
       "symbol_handles": [
-        "50F"
+        "32A"
       ],
       "source_row_text": [
         "套",
@@ -537,9 +537,9 @@
       "name": "淋浴器",
       "variant": "器具平面表达",
       "panel": "devices",
-      "source_name_handle": "5E4",
+      "source_name_handle": "3FF",
       "symbol_handles": [
-        "5BC"
+        "3D7"
       ],
       "source_row_text": [
         "套",
@@ -554,14 +554,14 @@
       "name": "成品污水检查井",
       "variant": null,
       "panel": "devices",
-      "source_name_handle": "5F9",
+      "source_name_handle": "414",
       "symbol_handles": [
-        "490",
-        "491",
-        "492",
-        "5DF",
-        "5E0",
-        "5E1"
+        "2AB",
+        "2AC",
+        "2AD",
+        "3FA",
+        "3FB",
+        "3FC"
       ],
       "source_row_text": [
         "个",
@@ -576,9 +576,9 @@
       "name": "化粪池",
       "variant": null,
       "panel": "devices",
-      "source_name_handle": "5F8",
+      "source_name_handle": "413",
       "symbol_handles": [
-        "5A7"
+        "3C2"
       ],
       "source_row_text": [
         "座",
@@ -588,5 +588,30 @@
         "钢筋混凝土化粪池"
       ]
     }
-  ]
+  ],
+  "sha256": "6ef2d74c322d5034795ffab3d9db2e32fb3589bf284d86058b0571c4973ec345",
+  "production_symbols": {
+    "WELL": {
+      "handle": "8B",
+      "name": "污水检查井",
+      "type": "TCH_WELL",
+      "layer": "WELL_污水"
+    },
+    "POT": {
+      "handle": "79",
+      "name": "化粪池",
+      "type": "TCH_POOL",
+      "layer": "TWT_室外",
+      "port_grips": [
+        0,
+        1
+      ]
+    },
+    "CLEAN": {
+      "handle": "98",
+      "name": "污水清扫口",
+      "type": "TCH_EQUIPMENT",
+      "layer": "EQUIP_污水"
+    }
+  }
 }

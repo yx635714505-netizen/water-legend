@@ -12,7 +12,7 @@
 git clone git@github.com:yx635714505-netizen/water-legend.git "$HOME/.codex/skills/water-legend"
 ```
 
-开始新的 Codex 会话，调用 `water-legend`。规则和参照资料均从克隆目录读取。索引中的本机绝对路径记录素材来源，四份原图随库放在 `assets/sources/`。
+开始新的 Codex 会话，调用 `water-legend`。规则、设备图例和版式母版均从技能目录读取。历史样图的原始取样记录可在完整源库查阅。[历史样本附录](references/历史样本附录.md)
 
 ## 更新
 
