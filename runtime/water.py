@@ -50,6 +50,20 @@ def commissioning(cfg):
         cfg.get(key) == example[key] for key in ("frames", "ops", "dimensions", "connections"))
 
 
+def check_basement_sheet_numbers(spec):
+    names = [frame["name"] for frame in spec["frames"]]
+    if not any("目录" in name for name in names):
+        return
+    basement = re.compile(r"地下|负[一二三四五六七八九十百零〇0-9]+层|(?<![A-Za-z])B[1-9]\d*(?!\d)", re.I)
+    if not any(basement.search(floor) for floor in spec.get("riserStoreys", [])):
+        return
+    sheets = [name for name in names if not any(word in name for word in ("目录", "说明", "图例"))]
+    for index, name in enumerate(sheets, 1):
+        expected = f"水施B-{index:02d}"
+        require(re.match(re.escape(expected) + r"(?!\d)", name),
+                f"含地下楼层的项目从水施B-01起连续编号，本页应为{expected}：{name}")
+
+
 def check_model_arrangement(frames):
     front = [f for f in frames if any(word in f["name"] for word in ("目录", "说明", "图例"))]
     drawings = [f for f in frames if f not in front]
@@ -99,6 +113,7 @@ def prepare(args):
         frames = spec["frames"]
         require(frames and len({f["name"] for f in frames}) == len(frames), "Unique layouts required")
         check_model_arrangement(frames)
+        check_basement_sheet_numbers(spec)
         if not commissioning(spec):
             require("ar" in sources, "逐层立管验收需要建筑原图 ar")
             riser_audit.plan_windows(spec)
@@ -195,6 +210,7 @@ def verify(job):
         save(out/"riser-audit.json", risers)
         require(risers["passed"], "立管逐层验收失败：\n" + "\n".join(risers["errors"]))
     check_model_arrangement(cfg["frames"])
+    check_basement_sheet_numbers(cfg)
     for f in cfg["frames"]:
         if "frameBlock" in f:
             boxes = [e["b"] for e in rows.values() if e["t"] == "INSERT" and e["n"] == f["frameBlock"]]
