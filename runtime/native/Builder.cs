@@ -5,6 +5,9 @@ const string K="tch_kernal.arx",W="tch_pipewire.arx";
 [DllImport(K,EntryPoint="?SetText@TDbText@@QEAAXPEB_W@Z",CharSet=CharSet.Unicode)]static extern void TextSet(IntPtr e,string s);
 [DllImport(K,EntryPoint="?SetText1@TDbSymbMultiLeader@@QEAAXPEB_W@Z",CharSet=CharSet.Unicode)]static extern void L1(IntPtr e,string s);
 [DllImport(K,EntryPoint="?SetText2@TDbSymbMultiLeader@@QEAAXPEB_W@Z",CharSet=CharSet.Unicode)]static extern void L2(IntPtr e,string s);
+const int NoLeaderArrow = 0;
+[DllImport(K,EntryPoint="?SetArrow@TDbSymbMultiLeader@@QEAAXW4TArrowStyle@1@@Z")]static extern void SetLeaderArrow(IntPtr e,int style);
+[DllImport(K,EntryPoint="?GetArrow@TDbSymbMultiLeader@@QEBA?AW4TArrowStyle@1@XZ")]public static extern int ReadLeaderArrow(IntPtr e);
 [DllImport(W,EntryPoint="?SetDnDiameter@TDbPipe@@QEAAXN@Z")]static extern void Diameter(IntPtr e,double dia);
 [DllImport(W,EntryPoint="?GetDnDiameter@TDbPipe@@QEBANXZ")]public static extern double ReadDn(IntPtr e);
 [DllImport(W,EntryPoint="?SetLabel@TDbPipe@@QEAAXPEB_W@Z",CharSet=CharSet.Unicode)]static extern void Prefix(IntPtr e,string s);
@@ -50,7 +53,7 @@ if(ba.text!=null) foreach(var kv in ba.text) SetTxt((Entity)t.GetObject(mapping[
 if(ba.fade) Fade(t,bid,new HashSet<ObjectId>());
 var br=new BlockReference(new Point3d(ba.dx,ba.dy,0),bid);if(ba.scale!=1.0)br.ScaleFactors=new Scale3d(ba.scale);var ms=(BlockTableRecord)t.GetObject(model(d),OpenMode.ForWrite);ms.AppendEntity(br);t.AddNewlyCreatedDBObject(br,true);var order=(DrawOrderTable)t.GetObject(ms.DrawOrderTableId,OpenMode.ForWrite);order.MoveToBottom(new ObjectIdCollection(new[]{br.ObjectId}));t.Commit();}log(ba.name);}
 static Entity clone(Transaction t,BlockTableRecord ms,Entity e){var n=(Entity)e.Clone();ms.AppendEntity(n);t.AddNewlyCreatedDBObject(n,true);return n;}
-static void leader(Transaction t,Database d,BlockTableRecord ms,string sample,string line1,string line2,double x,double y,string layer){var e=clone(t,ms,E(t,d,sample));var a=Grips(e)[2];move(e,x-a.X,y-a.Y);L1(e.UnmanagedObject,line1);L2(e.UnmanagedObject,line2);e.Layer=layer;e.RecordGraphicsModified(true);}
+static void leader(Transaction t,Database d,BlockTableRecord ms,string sample,string line1,string line2,double x,double y,string layer){var e=clone(t,ms,E(t,d,sample));var a=Grips(e)[2];move(e,x-a.X,y-a.Y);SetLeaderArrow(e.UnmanagedObject,NoLeaderArrow);L1(e.UnmanagedObject,line1);L2(e.UnmanagedObject,line2);e.Layer=layer;e.RecordGraphicsModified(true);}
 [DllImport(K,EntryPoint="?SetTextBaseLen@TDbSymbMultiLeader@@QEAAXNH@Z")]static extern void BaseLen(IntPtr e,double len,int which);
 static IEnumerable<Extents3d> TextBoxes(Entity e,int depth){if(e is DBText||e is MText){yield return e.GeometricExtents;yield break;}if(depth>4)yield break;var objects=new DBObjectCollection();try{e.Explode(objects);}catch{yield break;}foreach(DBObject o in objects){var en=o as Entity;if(en!=null&&(en.GetRXClass().DxfName.Contains("TEXT")||depth==0)){foreach(var ex in TextBoxes(en,depth+1))yield return ex;}o.Dispose();}}
 static Extents3d TextBox(Entity e){var boxes=TextBoxes(e,0).ToList();if(boxes.Count==0)throw new InvalidDataException("No visible text "+e.Handle);var result=boxes[0];foreach(var b in boxes.Skip(1))result.AddExtents(b);return result;}
@@ -110,6 +113,7 @@ foreach(var pair in samples.Concat(new[]{new KeyValuePair<string,string>("BOWL",
  layers.UpgradeOpen();layers.Add(layer);t.AddNewlyCreatedDBObject(layer,true);
  }}
  var type=e.GetRXClass().DxfName;
+ if(type=="TCH_MULTILEADER")SetLeaderArrow(e.UnmanagedObject,NoLeaderArrow);
  if((o.t=="p" || (o.t=="s" && o.dn>0)) && type!="TCH_PIPE") throw new InvalidDataException("Expected native pipe: "+o.h);
  if(o.t=="title" && type!="TCH_DRAWINGNAME") throw new InvalidDataException("Expected native drawing title"); if(o.t=="l" && type!="TCH_MULTILEADER") throw new InvalidDataException("Expected native leader");
  if(o.t=="d" && type!="TCH_DIMENSION2") throw new InvalidDataException("Expected native dimension");

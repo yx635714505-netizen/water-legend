@@ -76,6 +76,69 @@ def signed_distance(point, polygon):
     return -best if interior else best
 
 
+def wall_column_joints(cfg, item, pipe, nearby):
+    """Validate a source-traced native wall meeting the same physical concrete column."""
+    if "embeddedWallEvidence" not in item:
+        return item.get("embeddedHost"), {}
+    ev = item["embeddedWallEvidence"]
+    require(isinstance(ev, dict) and isinstance(item.get("embeddedHost"), str)
+            and item["embeddedHost"] and "雨水" in pipe["layer"], "墙柱交接原图证据或预埋管类无效")
+    original = cfg.get("sources", {}).get(ev.get("source"), {})
+    checksum = ev.get("sha256")
+    require(isinstance(checksum, str) and len(checksum) == 64
+            and all(c in "0123456789abcdef" for c in checksum.lower())
+            and original.get("sha256", "").lower() == checksum.lower(), "墙柱交接原图散列不符")
+    bases = [b for b in cfg.get("bases", []) if b["name"] == ev.get("base")]
+    require(len(bases) == 1 and ev.get("columnBlock") in bases[0]["ids"]
+            and isinstance(ev.get("hatch"), str) and ev["hatch"]
+            and all(c in "0123456789ABCDEF" for c in ev["hatch"].upper()),
+            "墙柱交接缺原图柱实例或填充句柄")
+    expected = ev.get("outline")
+    require(isinstance(expected, list) and len(expected) >= 3 and
+            all(numbers(p, 2) for p in expected), "缺少原图柱面顶点")
+    hosts = [o for o in nearby if o["kind"] == "barrier" and o["exact"] and
+             (o.get("type") == "TCH_COLUMN" or
+              (o.get("type") == "LWPOLYLINE" and
+               o.get("layer", "").split("$")[-1] in {"建-柱-砼", "建-柱-验算"}))
+             and len(o["polygon"]) == len(expected) and
+             all(hypot(x-u,y-v) <= .02 for (x,y),(u,v) in zip(expected,o["polygon"]))]
+    require(len(hosts) == 1, "成品未唯一对应原图混凝土柱轮廓")
+    host = hosts[0]
+    polygon = host["polygon"]
+    walls = ev.get("walls")
+    require(isinstance(walls, list) and walls, "未列明具体墙柱交接")
+    records = {}
+    for row in walls:
+        require(isinstance(row, dict) and row.get("sourceWall") in bases[0]["ids"],
+                "墙柱交接未对应原图墙句柄")
+        bounds, axis = row.get("bounds"), row.get("axis")
+        require(numbers(bounds, 4) and isinstance(axis, list) and len(axis) == 2
+                and all(numbers(p, 2) for p in axis), "缺少原墙轴端与边界")
+        left, bottom, right, top = bounds
+        corners = [[left,bottom],[right,bottom],[right,top],[left,top]]
+        require(right > left and top > bottom, "原墙边界为空")
+        matches = [o for o in nearby if o["kind"] == "barrier" and o.get("type") == "TCH_WALL"
+                   and o["path"].split("/")[0] == host["path"].split("/")[0] and len(o["polygon"]) == 4
+                   and all(any(hypot(x-u,y-v) <= .02 for u,v in o["polygon"]) for x,y in corners)]
+        require(len(matches) == 1 and matches[0]["path"] not in records,
+                "同一底图的成品原生墙不能按原图边界唯一对应")
+        wall = matches[0]
+        (x1,y1),(x2,y2) = sorted(axis)
+        horizontal = max(abs(x1-left), abs(x2-right),
+                         abs(y1-(bottom+top)/2), abs(y2-(bottom+top)/2)) <= .02
+        (x1,y1),(x2,y2) = sorted(axis,key=lambda p:p[1])
+        vertical = max(abs(y1-bottom), abs(y2-top),
+                       abs(x1-(left+right)/2), abs(x2-(left+right)/2)) <= .02
+        require(horizontal or vertical, "原生墙轴端未对应墙体实际跨度")
+        require(signed_distance(pipe["at"], wall["polygon"]) <= .02, "管位不在原墙与柱的交接投影内")
+        # Real masonry outside this column is a subset of the column exterior.
+        # The exact host inset is therefore a conservative LOWER bound to W minus C.
+        gap = -signed_distance(pipe["at"], polygon) - item["outerDiameter"]/2
+        records[wall["path"]] = dict(path=wall["path"], sourceWall=row["sourceWall"],
+            sourceConcreteHatch=ev["hatch"], host=host["path"], remainingWallGapLowerBound=gap)
+    return host["path"], records
+
+
 def check(cfg, geometry, sha, audit_rows):
     windows = plan_windows(cfg)
     require(geometry.get("version") == 1 and geometry.get("dwgSha256") == sha,
@@ -121,7 +184,7 @@ def check(cfg, geometry, sha, audit_rows):
             pipe = matches[0]
             claimed.add(pipe["path"])
             radius = item["outerDiameter"]/2
-            host = item.get("embeddedHost")
+            host, joints = wall_column_joints(cfg, item, pipe, nearby)
             failures = []
             distances = []
             if host and ("雨水" not in pipe["layer"] or host not in {o["path"] for o in nearby}):
@@ -133,6 +196,8 @@ def check(cfg, geometry, sha, audit_rows):
                         failures.append("预埋宿主缺精确轮廓 " + host)
                     d = -d
                 gap = d - radius
+                if o["path"] in joints:
+                    gap = joints[o["path"]]["remainingWallGapLowerBound"]
                 distances.append((gap, o["path"]))
                 if gap <= 0 or gap + 1e-6 < item["clearance"]:
                     failures.append(f"墙柱 {o['path']} 管外缘净距 {gap:.2f} mm")
@@ -140,7 +205,7 @@ def check(cfg, geometry, sha, audit_rows):
             nearest = min(distances) if distances else (None, None)
             rows.append(dict(number=item["number"], handle=pipe["path"], at=pipe["at"],
                              outerDiameter=item["outerDiameter"], requiredClearance=item["clearance"],
-                             nearestBarrier=nearest[1], netClearance=nearest[0], errors=failures))
+                             embeddedHost=host, wallColumnJoints=list(joints.values()), nearestBarrier=nearest[1], netClearance=nearest[0], errors=failures))
         results.append(dict(floor=floor, layout=p.get("layout"), expected=len(p["risers"]),
                             detected=len(found), barriers=len(nearby), checks=rows))
     # Include the whole paper window, including gaps between multi-floor subwindows.

@@ -2,12 +2,15 @@
 import argparse
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import re
 import shutil
 import subprocess
 import riser_audit
+import rain_audit
+import sewage_audit
 
 HERE = Path(__file__).resolve().parent
 ASSETS = HERE.parent / "assets"
@@ -50,18 +53,21 @@ def commissioning(cfg):
         cfg.get(key) == example[key] for key in ("frames", "ops", "dimensions", "connections"))
 
 
-def check_basement_sheet_numbers(spec):
+def check_sheet_numbers(spec):
     names = [frame["name"] for frame in spec["frames"]]
-    if not any("目录" in name for name in names):
+    if commissioning(spec):
         return
-    basement = re.compile(r"地下|负[一二三四五六七八九十百零〇0-9]+层|(?<![A-Za-z])B[1-9]\d*(?!\d)", re.I)
-    if not any(basement.search(floor) for floor in spec.get("riserStoreys", [])):
-        return
-    sheets = [name for name in names if not any(word in name for word in ("目录", "说明", "图例"))]
-    for index, name in enumerate(sheets, 1):
-        expected = f"水施B-{index:02d}"
-        require(re.match(re.escape(expected) + r"(?!\d)", name),
-                f"含地下楼层的项目从水施B-01起连续编号，本页应为{expected}：{name}")
+    front_index, drawing_index = 0, 1
+    for name in names:
+        if any(word in name for word in ("目录", "说明", "图例")):
+            require((front_index > 0) or "目录" in name, "水施-A00 应为目录")
+            expected = f"水施-A{front_index:02d}"
+            front_index += 1
+        else:
+            expected = f"水施-B{drawing_index:02d}"
+            drawing_index += 1
+        require(re.match(re.escape(expected) + r"(?![\dA-Za-z-])", name),
+                f"图别图号应为 {expected}：{name}")
 
 
 def check_model_arrangement(frames):
@@ -80,6 +86,27 @@ def check_model_arrangement(frames):
     require(drawings[0]["b"][0] > max(f["b"][2] for f in front)
             and abs(front[0]["b"][3] - drawings[0]["b"][3]) <= 1,
             "模型空间应左列目录说明、右列平面系统，两列顶边对齐")
+
+
+def plan_rain_bowls(spec, radius):
+    windows = [box for _, box in riser_audit.plan_windows(spec)]
+    centres = set()
+    for op in spec["ops"]:
+        if op["t"] != "s" or op["h"] not in ("BOWL", "BOWL_PLAN"):
+            continue
+        if any(riser_audit.inside(box, op["a"]) for box in windows):
+            if op["h"] == "BOWL":
+                op.update(h="BOWL_PLAN", rot=0, idx=0)
+            centres.add(tuple(op["a"]))
+    # A solid leader dot at the inlet axis obscures the two lines inside the ring.
+    for op in spec["ops"]:
+        if op["t"] != "l" or op.get("layer") != "DIM_雨水" or tuple(op["a"]) not in centres:
+            continue
+        x, y = op["a"]
+        dx, dy = op["b"][0] - x, op["b"][1] - y
+        length = math.hypot(dx, dy)
+        if length > radius:
+            op["a"] = [x + radius*dx/length, y + radius*dy/length]
 
 
 def prepare(args):
@@ -113,10 +140,18 @@ def prepare(args):
         frames = spec["frames"]
         require(frames and len({f["name"] for f in frames}) == len(frames), "Unique layouts required")
         check_model_arrangement(frames)
-        check_basement_sheet_numbers(spec)
+        check_sheet_numbers(spec)
         if not commissioning(spec):
+            plan_rain_bowls(spec, equipment["BOWL_PLAN"]["symbol_radius_mm"])
             require("ar" in sources, "逐层立管验收需要建筑原图 ar")
-            riser_audit.plan_windows(spec)
+            design_pipes = [dict(path=str(i), a=o["a"], b=o["b"], dn=o["dn"])
+                            for i, o in enumerate(spec["ops"]) if o["h"] == "WPLAN" and o["t"] == "p"]
+            plan_check = sewage_audit.check(spec, design_pipes)
+            require(plan_check["passed"], "\n".join(plan_check["errors"]))
+            rain = [dict(path=str(i), a=o["a"], b=o["b"]) for i, o in enumerate(spec["ops"])
+                    if o["t"] == "p" and o["h"] in ("YPLAN", "YSYS")]
+            rain_check = rain_audit.check(spec, rain)
+            require(rain_check["passed"], "\n".join(rain_check["errors"]))
         for f in frames:
             x,y,r,t = f["b"]
             require(f["scale"] > 0 and abs(r-x-420*f["scale"]) < .1 and
@@ -203,14 +238,23 @@ def verify(job):
                     digest(architecture) == cfg.get("sources", {}).get("ar", {}).get("sha256", "").lower(),
                     "立管楼层清单对应的建筑原图缺失或已变更")
             require(evidence.is_file(), "缺成品立管及墙柱几何回读，需要用当前技能重开 DWG")
-            risers = riser_audit.check(cfg, load(evidence), actual["dwgSha256"], rows.values())
+            geometry = load(evidence)
+            risers = riser_audit.check(cfg, geometry, actual["dwgSha256"], rows.values())
         except (ValueError, KeyError, TypeError) as exc:
             save(out/"riser-audit.json", dict(dwgSha256=actual["dwgSha256"], passed=False, errors=[str(exc)]))
             raise
         save(out/"riser-audit.json", risers)
         require(risers["passed"], "立管逐层验收失败：\n" + "\n".join(risers["errors"]))
+        require("sewage" in geometry, "缺少成品平面污水横管回读，请用当前水 SKILL 重新生成")
+        sewage = sewage_audit.check(cfg, geometry["sewage"])
+        save(out/"sewage-plan-audit.json", dict(dwgSha256=actual["dwgSha256"], **sewage))
+        require(sewage["passed"], "\n".join(sewage["errors"]))
+        require("rain" in geometry, "缺少成品雨水横管回读，请用当前水 SKILL 重新生成")
+        rain = rain_audit.check(cfg, geometry["rain"])
+        save(out/"rain-plan-audit.json", dict(dwgSha256=actual["dwgSha256"], **rain))
+        require(rain["passed"], "\n".join(rain["errors"]))
     check_model_arrangement(cfg["frames"])
-    check_basement_sheet_numbers(cfg)
+    check_sheet_numbers(cfg)
     for f in cfg["frames"]:
         if "frameBlock" in f:
             boxes = [e["b"] for e in rows.values() if e["t"] == "INSERT" and e["n"] == f["frameBlock"]]
@@ -229,10 +273,18 @@ def verify(job):
     for index, (h, op) in enumerate(zip(handles,cfg["ops"])):
         e = rows[h]
         require(e["b"] is not None, f"Missing native extents at operation {index}")
+        if e["t"] == "TCH_MULTILEADER":
+            require(e.get("leaderArrowStyle") == 0, f"天正引出标注 {h} 的箭头样式应为“无”")
         if op["h"] in equipment:
             expected = equipment[op["h"]]
             require(e["t"] == expected["type"] and e["l"] == op.get("layer",expected["layer"]),
-                    "井、池或清扫口原生类型或图层不符：" + h)
+                    "设备原生类型或图层不符：" + h)
+        if op["h"] == "BOWL_PLAN":
+            x, y, r, t = e["b"]
+            cx, cy = op["a"]
+            require(point(e["gp"][0]) == point(op["a"]) and r > x and t > y
+                    and abs((r-x)/(t-y)-1) < .02 and math.hypot((x+r)/2-cx, (y+t)/2-cy) < .02,
+                    "天沟雨水斗平面圆形外轮廓或中心与收水点不符：" + h)
         if op["h"] in ("SIDE_LEFT", "SIDE_RIGHT"):
             require(e["t"] == "TCH_EQUIPMENT" and e["l"] == op.get("layer","EQUIP_雨水")
                     and point(e["gp"][0]) == point(op["a"]), "Side outlet "+h)

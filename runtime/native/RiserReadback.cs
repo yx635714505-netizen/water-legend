@@ -76,7 +76,8 @@ public static class RiserReadback {
     }
 
     static void Walk(BlockTableRecord block, Transaction tx, Matrix3d transform, string prefix,
-                     string inherited, HashSet<ObjectId> active, HashSet<string> extra, List<object> objects) {
+                     string inherited, HashSet<ObjectId> active, HashSet<string> extra, List<object> objects,
+                     List<object> sewage, List<object> rain) {
         if (!active.Add(block.ObjectId)) throw new InvalidDataException("循环引用块 "+prefix);
         if (block.IsFromExternalReference && block.XrefStatus!=XrefStatus.Resolved)
             throw new InvalidDataException("建筑外参未解析 "+block.Name);
@@ -90,13 +91,19 @@ public static class RiserReadback {
             if (br!=null) {
                 if (br is MInsertBlock) throw new InvalidDataException("需展开阵列引用的实例坐标 "+path);
                 Walk((BlockTableRecord)tx.GetObject(br.BlockTableRecord,OpenMode.ForRead),tx,
-                     transform*br.BlockTransform,path+"/",layer,active,extra,objects);
+                     transform*br.BlockTransform,path+"/",layer,active,extra,objects,sewage,rain);
                 continue;
             }
             bool verticalLayer=layer.StartsWith("VPIPE",StringComparison.OrdinalIgnoreCase);
             if (type=="TCH_PIPE") {
                 var grips=new Point3dCollection();
                 entity.GetGripPoints(grips,new IntegerCollection(),new IntegerCollection());
+                if (layer.Equals("PIPE-污水",StringComparison.OrdinalIgnoreCase) && grips.Count>=2) {
+                    sewage.Add(new {path, a=XY(grips[0].TransformBy(transform)),
+                        b=XY(grips[1].TransformBy(transform)), dn=Builder.ReadDn(entity.UnmanagedObject)});
+                }
+                if ((IgnoreCase.Equals(layer,"PIPE-雨水") || IgnoreCase.Equals(layer,"S-PIPE-雨水")) && grips.Count>=2)
+                    rain.Add(new {path, a=XY(grips[0].TransformBy(transform)), b=XY(grips[1].TransformBy(transform))});
                 if (!verticalLayer && grips.Count!=1) continue;
                 if (grips.Count!=1) throw new InvalidDataException("立管夹点无法确定 "+path);
                 objects.Add(new {kind="riser",path,layer,at=XY(grips[0].TransformBy(transform)),dn=Builder.ReadDn(entity.UnmanagedObject)});
@@ -127,11 +134,13 @@ public static class RiserReadback {
         var json=new JavaScriptSerializer {MaxJsonLength=int.MaxValue};
         var config=json.Deserialize<LayerConfig>(File.ReadAllText(Path.Combine(Visit.root,"scripts","cfg.json")));
         var objects=new List<object>();
+        var sewage=new List<object>();
+        var rain=new List<object>();
         Walk(model,tx,Matrix3d.Identity,"","0",new HashSet<ObjectId>(),
-             new HashSet<string>(config.barrierLayers??new string[0],IgnoreCase),objects);
+             new HashSet<string>(config.barrierLayers??new string[0],IgnoreCase),objects,sewage,rain);
         File.WriteAllText(Path.Combine(folder,"riser-geometry.json"),
             json.Serialize(new {version=1,dwgSha256=DrawingProfile.DrawingHash(),
-                                barrierLayers=config.barrierLayers??new string[0],objects}));
+                                barrierLayers=config.barrierLayers??new string[0],objects,sewage,rain}));
     }
     public class LayerConfig {public string[] barrierLayers;}
 }

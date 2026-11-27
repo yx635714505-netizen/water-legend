@@ -67,6 +67,70 @@ class RiserAuditTests(unittest.TestCase):
         wall["exact"] = False
         self.assertFalse(self.result()["passed"])
 
+    def make_joint(self):
+        item = self.cfg["riserPlans"][0]["risers"][0]
+        pipe, host = self.geometry["objects"][:2]
+        item.update(at=[50,150], layer="VPIPE-雨水", embeddedHost=host["path"])
+        pipe.update(at=item["at"][:], layer=item["layer"])
+        host.update(type="LWPOLYLINE", layer="建-柱-砼")
+        wall = dict(kind="barrier", type="TCH_WALL", layer="WALL", path="0/EE",
+                    exact=False, polygon=[[0,120],[160,120],[160,180],[0,180]])
+        self.geometry["objects"].append(wall)
+        self.cfg.update(sources={"ar":{"sha256":"a"*64}},bases=[
+            dict(name="fixture",ids=["6A","6B"])])
+        item["embeddedWallEvidence"] = dict(source="ar", sha256="a"*64, base="fixture",
+            columnBlock="6A", hatch="BE", outline=[p[:] for p in host["polygon"]],
+            walls=[dict(path=wall["path"], sourceWall="6B",
+                        axis=[[0,150],[160,150]], bounds=[0,120,160,180])])
+        return item, wall
+
+    def test_named_native_wall_concrete_joint(self):
+        item, wall = self.make_joint()
+        result = self.result()
+        self.assertTrue(result["passed"], result["errors"])
+        check = result["floors"][0]["checks"][0]
+        self.assertEqual(check["wallColumnJoints"][0]["path"], wall["path"])
+        self.assertEqual(check["wallColumnJoints"][0]["remainingWallGapLowerBound"],25)
+        del item["embeddedWallEvidence"]
+        self.assertFalse(self.result()["passed"])
+
+    def test_joint_never_ignores_other_wall_or_pipe_edge(self):
+        item, wall = self.make_joint()
+        self.geometry["objects"].append(dict(wall,path="0/FF",polygon=[[1,120],[160,120],[160,180],[1,180]]))
+        self.assertFalse(self.result()["passed"])
+        self.geometry["objects"].pop()
+        item["clearance"] = 26
+        self.assertFalse(self.result()["passed"])
+
+    def test_joint_binds_recloned_handles_only_by_unique_geometry(self):
+        item, wall = self.make_joint()
+        host = self.geometry["objects"][1]
+        host["path"], wall["path"] = "8/77", "8/99"
+        check = self.result()["floors"][0]["checks"][0]
+        self.assertEqual(check["embeddedHost"], "8/77")
+        self.assertEqual(check["wallColumnJoints"][0]["path"], "8/99")
+        for duplicate in [host, wall]:
+            self.geometry["objects"].append(dict(duplicate,path="8/CC"))
+            with self.assertRaises(ValueError):
+                self.result()
+            self.geometry["objects"].pop()
+
+    def test_joint_rejects_unbound_geometry(self):
+        for change in ("checksum","sourceWall","wallType","hostType","axis","outline","duplicate"):
+            with self.subTest(change=change):
+                self.setUp()
+                item, wall = self.make_joint()
+                ev = item["embeddedWallEvidence"]
+                if change == "checksum": ev["sha256"]="x"*64
+                if change == "sourceWall": ev["walls"][0]["sourceWall"]="ABCD"
+                if change == "wallType": wall["type"]="LINE"
+                if change == "hostType": self.geometry["objects"][1]["layer"]="屋面线"
+                if change == "axis": ev["walls"][0]["axis"][0][0]+=10
+                if change == "outline": ev["outline"][0][0]+=1
+                if change == "duplicate": ev["walls"].append(ev["walls"][0])
+                with self.assertRaises(ValueError):
+                    self.result()
+
     def test_hash_and_unresolved_outline(self):
         self.geometry["objects"][1]["kind"] = "unknown"
         self.assertFalse(self.result()["passed"])

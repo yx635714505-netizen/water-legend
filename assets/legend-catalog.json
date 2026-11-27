@@ -418,6 +418,10 @@
       "variant": null,
       "panel": "devices",
       "source_name_handle": "401",
+      "views": {
+        "plan": "399",
+        "elevation": "393"
+      },
       "symbol_handles": [
         "393",
         "399"
@@ -591,6 +595,13 @@
   ],
   "sha256": "6ef2d74c322d5034795ffab3d9db2e32fb3589bf284d86058b0571c4973ec345",
   "production_symbols": {
+    "BOWL_PLAN": {
+      "handle": "399",
+      "name": "87型雨水斗平面",
+      "symbol_radius_mm": 83.20706,
+      "type": "TCH_EQUIPMENT",
+      "layer": "EQUIP_雨水"
+    },
     "WELL": {
       "handle": "8B",
       "name": "污水检查井",
