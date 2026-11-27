@@ -19,7 +19,7 @@ class RiserAuditTests(unittest.TestCase):
             self.cfg["riserPlans"].append(dict(layout=name, floor=floor, sourceRef=floor, risers=[item]))
             self.geometry["objects"].extend([
                 dict(kind="riser", path=f"{i}/AB", at=at, layer=item["layer"], dn=40),
-                dict(kind="barrier", path=f"{i}/CD", exact=True,
+                dict(kind="barrier", path=f"{i}/CA/CD", exact=True,
                      polygon=[[x,100],[x+100,100],[x+100,200],[x,200]])])
 
     def result(self):
@@ -77,11 +77,14 @@ class RiserAuditTests(unittest.TestCase):
                     exact=False, polygon=[[0,120],[160,120],[160,180],[0,180]])
         self.geometry["objects"].append(wall)
         self.cfg.update(sources={"ar":{"sha256":"a"*64}},bases=[
-            dict(name="fixture",ids=["6A","6B"])])
+            dict(name="fixture",source="ar",ids=["6A","6B"])])
         item["embeddedWallEvidence"] = dict(source="ar", sha256="a"*64, base="fixture",
             columnBlock="6A", hatch="BE", outline=[p[:] for p in host["polygon"]],
             walls=[dict(path=wall["path"], sourceWall="6B",
                         axis=[[0,150],[160,150]], bounds=[0,120,160,180])])
+        self.geometry["jointProofs"] = [dict(base="fixture", source="ar", sourceSha256="a"*64,
+            importedSource="ar", importedSha256="a"*64, columnBlock="6A", hatch="BE",
+            columnPath="0/CA", outline=host["polygon"], importedOutline=host["polygon"], wallPaths={"6B":wall["path"]})]
         return item, wall
 
     def test_named_native_wall_concrete_joint(self):
@@ -102,18 +105,31 @@ class RiserAuditTests(unittest.TestCase):
         item["clearance"] = 26
         self.assertFalse(self.result()["passed"])
 
-    def test_joint_binds_recloned_handles_only_by_unique_geometry(self):
+    def test_joint_uses_new_clone_paths_and_rejects_duplicate_geometry(self):
         item, wall = self.make_joint()
         host = self.geometry["objects"][1]
-        host["path"], wall["path"] = "8/77", "8/99"
+        host["path"], wall["path"] = "8/44/77", "8/99"
+        self.geometry["jointProofs"][0].update(columnPath="8/44", wallPaths={"6B":"8/99"})
         check = self.result()["floors"][0]["checks"][0]
-        self.assertEqual(check["embeddedHost"], "8/77")
+        self.assertEqual(check["embeddedHost"], "8/44/77")
         self.assertEqual(check["wallColumnJoints"][0]["path"], "8/99")
-        for duplicate in [host, wall]:
-            self.geometry["objects"].append(dict(duplicate,path="8/CC"))
-            with self.assertRaises(ValueError):
-                self.result()
-            self.geometry["objects"].pop()
+        self.geometry["objects"].append(dict(host, path="8/44/CC"))
+        with self.assertRaises(ValueError):
+            self.result()
+        self.geometry["objects"].pop()
+        self.geometry["objects"].append(dict(wall, path="8/BB"))
+        self.assertFalse(self.result()["passed"])
+
+    def test_classified_copy_must_match_both_source_outlines(self):
+        self.make_joint()
+        self.cfg["bases"][0]["source"] = "clean"
+        self.cfg["sources"]["clean"] = {"sha256":"b"*64}
+        proof = self.geometry["jointProofs"][0]
+        proof.update(importedSource="clean", importedSha256="b"*64)
+        self.assertTrue(self.result()["passed"])
+        proof["importedOutline"] = [[0,0],[1,0],[0,1]]
+        with self.assertRaises(ValueError):
+            self.result()
 
     def test_joint_rejects_unbound_geometry(self):
         for change in ("checksum","sourceWall","wallType","hostType","axis","outline","duplicate"):
@@ -128,6 +144,23 @@ class RiserAuditTests(unittest.TestCase):
                 if change == "axis": ev["walls"][0]["axis"][0][0]+=10
                 if change == "outline": ev["outline"][0][0]+=1
                 if change == "duplicate": ev["walls"].append(ev["walls"][0])
+                with self.assertRaises(ValueError):
+                    self.result()
+
+    def test_joint_requires_proof_from_actual_import(self):
+        for change in ("source", "hatch", "missing", "otherColumn", "otherWall", "otherOutline"):
+            with self.subTest(change=change):
+                self.setUp()
+                item, wall = self.make_joint()
+                proof = self.geometry["jointProofs"][0]
+                if change == "source":
+                    self.cfg["sources"]["other"] = {"sha256":"b"*64}
+                    self.cfg["bases"][0]["source"] = "other"
+                if change == "hatch": item["embeddedWallEvidence"]["hatch"] = "DEADBEEF"
+                if change == "missing": del self.geometry["jointProofs"]
+                if change == "otherColumn": proof["columnPath"] = "0/FF"
+                if change == "otherWall": proof["wallPaths"]["6B"] = "0/FF"
+                if change == "otherOutline": proof["outline"] = [[0,0],[1,0],[0,1]]
                 with self.assertRaises(ValueError):
                     self.result()
 

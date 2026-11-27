@@ -9,6 +9,8 @@ using Autodesk.AutoCAD.Geometry;
 public static class RiserReadback {
     static readonly StringComparer IgnoreCase = StringComparer.OrdinalIgnoreCase;
 
+    static readonly string[] SewageLayers = {"PIPE-污水","S-PIPE-污水"};
+
     static double[] XY(Point3d p) { return new[]{p.X, p.Y}; }
     static string Plain(string layer) { return layer.Split('$').Last(); }
     const string RetainedLayer = "WATER_ORIGINAL_BARRIER_LAYER";
@@ -98,7 +100,7 @@ public static class RiserReadback {
             if (type=="TCH_PIPE") {
                 var grips=new Point3dCollection();
                 entity.GetGripPoints(grips,new IntegerCollection(),new IntegerCollection());
-                if (layer.Equals("PIPE-污水",StringComparison.OrdinalIgnoreCase) && grips.Count>=2) {
+                if (SewageLayers.Contains(layer,IgnoreCase) && grips.Count>=2) {
                     sewage.Add(new {path, a=XY(grips[0].TransformBy(transform)),
                         b=XY(grips[1].TransformBy(transform)), dn=Builder.ReadDn(entity.UnmanagedObject)});
                 }
@@ -139,8 +141,8 @@ public static class RiserReadback {
         Walk(model,tx,Matrix3d.Identity,"","0",new HashSet<ObjectId>(),
              new HashSet<string>(config.barrierLayers??new string[0],IgnoreCase),objects,sewage,rain);
         File.WriteAllText(Path.Combine(folder,"riser-geometry.json"),
-            json.Serialize(new {version=1,dwgSha256=DrawingProfile.DrawingHash(),
-                                barrierLayers=config.barrierLayers??new string[0],objects,sewage,rain}));
+            json.Serialize(new {version=1,jointProofs=JointEvidence.Read(model,tx).ToArray(),dwgSha256=DrawingProfile.DrawingHash(),
+                                barrierLayers=config.barrierLayers??new string[0],objects,sewageLayers=SewageLayers,sewage,rain}));
     }
     public class LayerConfig {public string[] barrierLayers;}
 }

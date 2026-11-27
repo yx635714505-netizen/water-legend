@@ -21,9 +21,25 @@ def close(a, b):
     return hypot(a[0] - b[0], a[1] - b[1]) <= 0.02
 
 
+def outside_plan_windows(cfg, windows, segments, system):
+    # On a shared sheet also inspect strips of paper outside all floor windows.
+    layouts = {p.get("layout") for p, _ in windows}
+    for frame in cfg["frames"]:
+        if frame["name"] not in layouts:
+            continue
+        for pipe in segments:
+            a, b = pipe["a"], pipe["b"]
+            if intersects(frame["b"], a, b) and not any(
+                    p.get("layout") == frame["name"] and inside(box, a) and inside(box, b)
+                    for p, box in windows):
+                yield f"{frame['name']} {system}横管越出本层核对窗口 {pipe['path']}"
+
+
 def check(cfg, segments):
     results, errors = [], []
-    for floor, box in plan_windows(cfg):
+    windows = plan_windows(cfg)
+    errors.extend(outside_plan_windows(cfg, windows, segments, "污水"))
+    for floor, box in windows:
         remaining = []
         for route in floor.get("sewageRoutes", []):
             use, pts = route["use"], route["points"]

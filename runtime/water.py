@@ -58,12 +58,17 @@ def check_sheet_numbers(spec):
     if commissioning(spec):
         return
     front_index, drawing_index = 0, 1
+    seen_system = False
     for name in names:
         if any(word in name for word in ("目录", "说明", "图例")):
             require((front_index > 0) or "目录" in name, "水施-A00 应为目录")
             expected = f"水施-A{front_index:02d}"
             front_index += 1
         else:
+            if "平面" in name or any(plan.get("layout") == name for plan in spec.get("riserPlans", [])):
+                require(not seen_system, "系统图应接最后一张平面图续号：" + name)
+            if "系统" in name:
+                seen_system = True
             expected = f"水施-B{drawing_index:02d}"
             drawing_index += 1
         require(re.match(re.escape(expected) + r"(?![\dA-Za-z-])", name),
@@ -109,6 +114,11 @@ def plan_rain_bowls(spec, radius):
             op["a"] = [x + radius*dx/length, y + radius*dy/length]
 
 
+def design_sewage_segments(ops):
+    return [dict(path=str(i), a=op["a"], b=op["b"], dn=op["dn"])
+            for i, op in enumerate(ops) if op["t"] == "p" and op["h"] in ("WPLAN", "WSYS")]
+
+
 def prepare(args):
     target = args.package.resolve()
     sources = {}
@@ -144,9 +154,7 @@ def prepare(args):
         if not commissioning(spec):
             plan_rain_bowls(spec, equipment["BOWL_PLAN"]["symbol_radius_mm"])
             require("ar" in sources, "逐层立管验收需要建筑原图 ar")
-            design_pipes = [dict(path=str(i), a=o["a"], b=o["b"], dn=o["dn"])
-                            for i, o in enumerate(spec["ops"]) if o["h"] == "WPLAN" and o["t"] == "p"]
-            plan_check = sewage_audit.check(spec, design_pipes)
+            plan_check = sewage_audit.check(spec, design_sewage_segments(spec["ops"]))
             require(plan_check["passed"], "\n".join(plan_check["errors"]))
             rain = [dict(path=str(i), a=o["a"], b=o["b"]) for i, o in enumerate(spec["ops"])
                     if o["t"] == "p" and o["h"] in ("YPLAN", "YSYS")]
@@ -245,7 +253,7 @@ def verify(job):
             raise
         save(out/"riser-audit.json", risers)
         require(risers["passed"], "立管逐层验收失败：\n" + "\n".join(risers["errors"]))
-        require("sewage" in geometry, "缺少成品平面污水横管回读，请用当前水 SKILL 重新生成")
+        require("sewage" in geometry and set(geometry.get("sewageLayers", [])) == {"PIPE-污水","S-PIPE-污水"}, "缺少成品平面污水横管回读，请用当前水 SKILL 重新生成")
         sewage = sewage_audit.check(cfg, geometry["sewage"])
         save(out/"sewage-plan-audit.json", dict(dwgSha256=actual["dwgSha256"], **sewage))
         require(sewage["passed"], "\n".join(sewage["errors"]))
@@ -360,6 +368,15 @@ def check_baseline(job):
     config = load(job/"scripts/cfg.json")
     require(config["frames"] == example["frames"] and config["ops"] == example["ops"],
             "请使用随库 commission.json 的试图任务")
+
+    # The two commissioning sheets contain one native pipe from each sewage layer.
+    handles = load(job/"output/handles.json")
+    pipes = load(job/"output/riser-geometry.json")["sewage"]
+    for design in design_sewage_segments(config["ops"]):
+        handle = handles[int(design["path"])]
+        require(any(pipe["path"] == handle and pipe["dn"] == design["dn"] and
+                    sewage_audit.close(pipe["a"], design["a"]) and sewage_audit.close(pipe["b"], design["b"])
+                    for pipe in pipes), "试图缺少平面或系统污水管的原生回读：" + handle)
 
     def pixels(path):
         with pdf.PdfDocument(path) as document:

@@ -2,7 +2,7 @@
 import re
 
 from riser_audit import inside, numbers, plan_windows
-from sewage_audit import close, intersects
+from sewage_audit import close, intersects, outside_plan_windows
 
 
 def check(cfg, segments):
@@ -38,15 +38,5 @@ def check(cfg, segments):
                 del expected[match]
         errors.extend(f"{floor} {number} 缺少接沟管" for number in expected)
         floors.append(dict(floor=floor, paths=paths))
-    # On a shared sheet also inspect strips of paper outside all floor windows.
-    layouts = {p.get("layout") for p, _ in windows}
-    for frame in cfg["frames"]:
-        if frame["name"] not in layouts:
-            continue
-        for pipe in segments:
-            a, b = pipe["a"], pipe["b"]
-            if intersects(frame["b"], a, b) and not any(
-                    p.get("layout") == frame["name"] and inside(box, a) and inside(box, b)
-                    for p, box in windows):
-                errors.append(f"{frame['name']} 雨水横管越出本层核对窗口 {pipe['path']}")
+    errors.extend(outside_plan_windows(cfg, windows, segments, "雨水"))
     return dict(passed=not errors, floors=floors, errors=errors)

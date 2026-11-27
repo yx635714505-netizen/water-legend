@@ -76,7 +76,20 @@ def signed_distance(point, polygon):
     return -best if interior else best
 
 
-def wall_column_joints(cfg, item, pipe, nearby):
+def same_outline(a, b):
+    if len(a) != len(b) or not a:
+        return False
+    for i, point in enumerate(b):
+        if hypot(a[0][0]-point[0], a[0][1]-point[1]) > .02:
+            continue
+        for step in (1, -1):
+            if all(hypot(x-b[(i+step*j) % len(b)][0], y-b[(i+step*j) % len(b)][1]) <= .02
+                   for j, (x, y) in enumerate(a)):
+                return True
+    return False
+
+
+def wall_column_joints(cfg, item, pipe, nearby, proofs):
     """Validate a source-traced native wall meeting the same physical concrete column."""
     if "embeddedWallEvidence" not in item:
         return item.get("embeddedHost"), {}
@@ -96,12 +109,20 @@ def wall_column_joints(cfg, item, pipe, nearby):
     expected = ev.get("outline")
     require(isinstance(expected, list) and len(expected) >= 3 and
             all(numbers(p, 2) for p in expected), "缺少原图柱面顶点")
+    imported = bases[0].get("source")
+    records = [p for p in proofs if p["base"] == ev["base"] and p["source"] == ev["source"]
+               and p["sourceSha256"] == checksum.lower() and p["importedSource"] == imported
+               and p["importedSha256"] == cfg["sources"].get(imported, {}).get("sha256", "").lower()
+               and p["columnBlock"] == ev["columnBlock"] and p["hatch"] == ev["hatch"]]
+    require(len(records) == 1 and same_outline(expected, records[0]["outline"])
+            and same_outline(expected, records[0]["importedOutline"]),
+            "原图柱填充与实际导入底图的回读证据不符，请重新出图")
+    proof = records[0]
     hosts = [o for o in nearby if o["kind"] == "barrier" and o["exact"] and
              (o.get("type") == "TCH_COLUMN" or
               (o.get("type") == "LWPOLYLINE" and
                o.get("layer", "").split("$")[-1] in {"建-柱-砼", "建-柱-验算"}))
-             and len(o["polygon"]) == len(expected) and
-             all(hypot(x-u,y-v) <= .02 for (x,y),(u,v) in zip(expected,o["polygon"]))]
+             and o["path"].startswith(proof["columnPath"] + "/") and same_outline(expected, o["polygon"])]
     require(len(hosts) == 1, "成品未唯一对应原图混凝土柱轮廓")
     host = hosts[0]
     polygon = host["polygon"]
@@ -118,7 +139,7 @@ def wall_column_joints(cfg, item, pipe, nearby):
         corners = [[left,bottom],[right,bottom],[right,top],[left,top]]
         require(right > left and top > bottom, "原墙边界为空")
         matches = [o for o in nearby if o["kind"] == "barrier" and o.get("type") == "TCH_WALL"
-                   and o["path"].split("/")[0] == host["path"].split("/")[0] and len(o["polygon"]) == 4
+                   and o["path"] == proof["wallPaths"].get(row["sourceWall"]) and len(o["polygon"]) == 4
                    and all(any(hypot(x-u,y-v) <= .02 for u,v in o["polygon"]) for x,y in corners)]
         require(len(matches) == 1 and matches[0]["path"] not in records,
                 "同一底图的成品原生墙不能按原图边界唯一对应")
@@ -184,7 +205,7 @@ def check(cfg, geometry, sha, audit_rows):
             pipe = matches[0]
             claimed.add(pipe["path"])
             radius = item["outerDiameter"]/2
-            host, joints = wall_column_joints(cfg, item, pipe, nearby)
+            host, joints = wall_column_joints(cfg, item, pipe, nearby, geometry.get("jointProofs", []))
             failures = []
             distances = []
             if host and ("雨水" not in pipe["layer"] or host not in {o["path"] for o in nearby}):

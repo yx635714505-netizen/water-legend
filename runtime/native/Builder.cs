@@ -45,13 +45,15 @@ static void FadeOpeningLayers(Database db) {
     }
 }
 static Database read(string file){var db=new Database(false,true);db.ReadDwgFile(file,FileOpenMode.OpenForReadAndAllShare,true,null);db.CloseInput(true);return db;}
-static void InsertBase(Database d,Database ar,Base ba){ObjectId bid;using(var t=d.TransactionManager.StartTransaction()){var bt=(BlockTable)t.GetObject(d.BlockTableId,OpenMode.ForWrite);var b=new BlockTableRecord(){Name=ba.name};bid=bt.Add(b);t.AddNewlyCreatedDBObject(b,true);t.Commit();}
+static void InsertBase(Database d,Database ar,Base ba,JointEvidence.Request[] evidence){ObjectId bid;using(var t=d.TransactionManager.StartTransaction()){var bt=(BlockTable)t.GetObject(d.BlockTableId,OpenMode.ForWrite);var b=new BlockTableRecord(){Name=ba.name};bid=bt.Add(b);t.AddNewlyCreatedDBObject(b,true);t.Commit();}
 var mapping=new IdMapping();
 ar.WblockCloneObjects(new ObjectIdCollection(ba.ids.Select(h=>Id(ar,h)).ToArray()),bid,mapping,DuplicateRecordCloning.MangleName,false);
 using(var t=d.TransactionManager.StartTransaction()){
 if(ba.text!=null) foreach(var kv in ba.text) SetTxt((Entity)t.GetObject(mapping[Id(ar,kv.Key)].Value,OpenMode.ForWrite),kv.Value);
 if(ba.fade) Fade(t,bid,new HashSet<ObjectId>());
-var br=new BlockReference(new Point3d(ba.dx,ba.dy,0),bid);if(ba.scale!=1.0)br.ScaleFactors=new Scale3d(ba.scale);var ms=(BlockTableRecord)t.GetObject(model(d),OpenMode.ForWrite);ms.AppendEntity(br);t.AddNewlyCreatedDBObject(br,true);var order=(DrawOrderTable)t.GetObject(ms.DrawOrderTableId,OpenMode.ForWrite);order.MoveToBottom(new ObjectIdCollection(new[]{br.ObjectId}));t.Commit();}log(ba.name);}
+var br=new BlockReference(new Point3d(ba.dx,ba.dy,0),bid);if(ba.scale!=1.0)br.ScaleFactors=new Scale3d(ba.scale);var ms=(BlockTableRecord)t.GetObject(model(d),OpenMode.ForWrite);ms.AppendEntity(br);t.AddNewlyCreatedDBObject(br,true);
+if(evidence.Length>0) JointEvidence.Capture(ba,ar,mapping,br,t,evidence);
+var order=(DrawOrderTable)t.GetObject(ms.DrawOrderTableId,OpenMode.ForWrite);order.MoveToBottom(new ObjectIdCollection(new[]{br.ObjectId}));t.Commit();}log(ba.name);}
 static Entity clone(Transaction t,BlockTableRecord ms,Entity e){var n=(Entity)e.Clone();ms.AppendEntity(n);t.AddNewlyCreatedDBObject(n,true);return n;}
 static void leader(Transaction t,Database d,BlockTableRecord ms,string sample,string line1,string line2,double x,double y,string layer){var e=clone(t,ms,E(t,d,sample));var a=Grips(e)[2];move(e,x-a.X,y-a.Y);SetLeaderArrow(e.UnmanagedObject,NoLeaderArrow);L1(e.UnmanagedObject,line1);L2(e.UnmanagedObject,line2);e.Layer=layer;e.RecordGraphicsModified(true);}
 [DllImport(K,EntryPoint="?SetTextBaseLen@TDbSymbMultiLeader@@QEAAXNH@Z")]static extern void BaseLen(IntPtr e,double len,int which);
@@ -94,7 +96,10 @@ static Dictionary<string,ObjectId> ImportStyles(Database db){var dest=new Dictio
     db.Ltscale=style.Ltscale;db.Celtscale=style.Celtscale;
 foreach(var pair in samples.Concat(new[]{new KeyValuePair<string,string>("BOWL","85C52")})){var id=Id(style,pair.Value);var map=new IdMapping();style.WblockCloneObjects(new ObjectIdCollection(new[]{id}),model(db),map,DuplicateRecordCloning.Ignore,false);dest[pair.Key]=map[id].Value;}}}return dest;}static void Build(Database d){
  var c=cfg;
- foreach(var ba in c.bases) using(var src=read(root+"/input/"+ba.source+".dwg")) InsertBase(d,src,ba);
+ var job=js.Deserialize<JointEvidence.Config>(File.ReadAllText(root+"/scripts/cfg.json"));
+ var joints=(job.riserPlans??new JointEvidence.Plan[0]).SelectMany(p=>p.risers)
+     .Select(r=>r.embeddedWallEvidence).Where(e=>e!=null).ToLookup(e=>e.@base);
+ foreach(var ba in c.bases) using(var src=read(root+"/input/"+ba.source+".dwg")) InsertBase(d,src,ba,joints[ba.name].ToArray());
  HashSet<ObjectId> before;using(var tx=d.TransactionManager.StartTransaction()){before=new HashSet<ObjectId>(((BlockTableRecord)tx.GetObject(model(d),OpenMode.ForRead)).Cast<ObjectId>());} var prototypes=ImportStyles(d);
  foreach(var kv in c.symbols) using(var src=read(root+"/input/"+kv.Value.source+".dwg"))
      prototypes.Add(kv.Key,imp(d,src,kv.Value.handle,kv.Value.source=="pot"));
