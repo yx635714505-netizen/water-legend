@@ -120,6 +120,17 @@ class RiserAuditTests(unittest.TestCase):
         self.geometry["objects"].append(dict(wall, path="8/BB"))
         self.assertFalse(self.result()["passed"])
 
+    def test_classified_copy_cannot_supply_original_wall_evidence(self):
+        item, _ = self.make_joint()
+        checksum = "b" * 64
+        self.cfg["sources"]["clean"] = {"sha256": checksum}
+        self.cfg["bases"][0]["source"] = "clean"
+        item["embeddedWallEvidence"].update(source="clean", sha256=checksum)
+        self.geometry["jointProofs"][0].update(source="clean", sourceSha256=checksum,
+                                              importedSource="clean", importedSha256=checksum)
+        with self.assertRaisesRegex(ValueError, "建筑原图 ar"):
+            self.result()
+
     def test_classified_copy_must_match_both_source_outlines(self):
         self.make_joint()
         self.cfg["bases"][0]["source"] = "clean"
@@ -127,9 +138,13 @@ class RiserAuditTests(unittest.TestCase):
         proof = self.geometry["jointProofs"][0]
         proof.update(importedSource="clean", importedSha256="b"*64)
         self.assertTrue(self.result()["passed"])
-        proof["importedOutline"] = [[0,0],[1,0],[0,1]]
-        with self.assertRaises(ValueError):
-            self.result()
+        for field in ("outline", "importedOutline"):
+            with self.subTest(field=field):
+                original = proof[field]
+                proof[field] = [[0,0],[1,0],[0,1]]
+                with self.assertRaises(ValueError):
+                    self.result()
+                proof[field] = original
 
     def test_joint_rejects_unbound_geometry(self):
         for change in ("checksum","sourceWall","wallType","hostType","axis","outline","duplicate"):

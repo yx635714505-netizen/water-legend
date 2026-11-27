@@ -71,20 +71,20 @@ public static class JointEvidence {
         var importedHash = Hash(b.source);
         foreach (var group in requests.GroupBy(e => new {e.source,e.columnBlock,e.hatch})) {
             var e = group.First();
+            if (e.source != "ar") throw new InvalidDataException("墙柱交接证据须追溯至建筑原图 ar");
             if (!b.ids.Contains(e.columnBlock)) throw new InvalidDataException("所选柱不在导入清单中");
             var polygon = HatchOutline(imported,e,root.BlockTransform);
             var originalPolygon = polygon;
             var originalHash = importedHash;
-            if (e.source != b.source) {
+            if (b.source != "ar") {
                 // A classified copy may have added outlines. Both drawings must
                 // independently contain the claimed hatch on this column instance.
-                if (e.source != "ar") throw new InvalidDataException("派生底图须追溯至建筑原图 ar");
                 using (var original = new Database(false,true)) {
-                    original.ReadDwgFile(Input(e.source),FileOpenMode.OpenForReadAndAllShare,true,null);
+                    original.ReadDwgFile(Input("ar"),FileOpenMode.OpenForReadAndAllShare,true,null);
                     original.CloseInput(true);
                     originalPolygon = HatchOutline(original,e,root.BlockTransform);
                 }
-                originalHash = Hash(e.source);
+                originalHash = Hash("ar");
             }
             var wallPaths = new Dictionary<string,string>();
             foreach (string wall in group.SelectMany(r => r.walls).Select(w => w.sourceWall).Distinct()) {

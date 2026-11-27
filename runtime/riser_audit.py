@@ -96,7 +96,8 @@ def wall_column_joints(cfg, item, pipe, nearby, proofs):
     ev = item["embeddedWallEvidence"]
     require(isinstance(ev, dict) and isinstance(item.get("embeddedHost"), str)
             and item["embeddedHost"] and "雨水" in pipe["layer"], "墙柱交接原图证据或预埋管类无效")
-    original = cfg.get("sources", {}).get(ev.get("source"), {})
+    require(ev.get("source") == "ar", "墙柱交接证据须追溯至建筑原图 ar")
+    original = cfg.get("sources", {}).get("ar", {})
     checksum = ev.get("sha256")
     require(isinstance(checksum, str) and len(checksum) == 64
             and all(c in "0123456789abcdef" for c in checksum.lower())
